@@ -30,15 +30,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Stats (fixed numbered array) ─── */}
+      {/* ─── Stats (repeater — static container anchors section order) ─── */}
       <section className="bg-sand">
-        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-12 sm:grid-cols-3">
+        <div data-cms-repeater="Home - Stats" className="mx-auto grid max-w-6xl gap-6 px-5 py-12 sm:grid-cols-3">
           {c.home_stats.map((stat, i) => (
-            <div key={stat.label} className="text-center">
-              <p className="text-4xl font-extrabold text-accent" data-cms={`Home - Stats - Value ${i + 1}`}>
+            <div key={i} className="text-center">
+              <p className="text-4xl font-extrabold text-accent" data-cms-field="value">
                 {stat.value}
               </p>
-              <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-navy/60" data-cms={`Home - Stats - Label ${i + 1}`}>
+              <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-navy/60" data-cms-field="label">
                 {stat.label}
               </p>
             </div>

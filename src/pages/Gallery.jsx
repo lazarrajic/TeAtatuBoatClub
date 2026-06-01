@@ -14,25 +14,24 @@ export default function Gallery() {
       </section>
 
       <section className="section">
-        <AnimatedSection>
-          {/* CMS-managed gallery. Seeded with the 65th Anniversary set; the office
-              can add albums and photos from the dashboard. The string/url guard
-              keeps it rendering both from content.js and after the CMS snippet. */}
-          <div
-            data-cms-gallery="Gallery - Photos"
-            className="columns-2 gap-4 sm:columns-3 lg:columns-4 [&>img]:mb-4"
-          >
-            {c.gallery_photos.map((item, i) => (
+        {/* Repeater (not data-cms-gallery) so the seeded photos render from
+            content.js and stay add/edit/removable in the CMS. */}
+        <div
+          data-cms-repeater="Gallery - Photos"
+          className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4"
+        >
+          {c.gallery_photos.map((item, i) => (
+            <div key={i} className="overflow-hidden rounded-xl bg-navy/5">
               <img
-                key={i}
-                src={typeof item === 'string' ? item : item.url}
+                src={item.image}
+                data-cms-field="image"
                 alt=""
                 loading="lazy"
-                className="w-full rounded-xl object-cover"
+                className="aspect-square w-full object-cover transition-transform duration-300 hover:scale-105"
               />
-            ))}
-          </div>
-        </AnimatedSection>
+            </div>
+          ))}
+        </div>
       </section>
     </>
   )

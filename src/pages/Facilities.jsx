@@ -1,75 +1,109 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
+import WaveDivider from '../components/WaveDivider.jsx'
 
+// ── Simple nautical line icons (stroke = currentColor) ──
+function WheelIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-6 w-6">
+      <circle cx="12" cy="12" r="3" /><circle cx="12" cy="12" r="9" />
+      <path d="M12 3v4M12 17v4M3 12h4M17 12h4M5.6 5.6l2.8 2.8M15.6 15.6l2.8 2.8M18.4 5.6l-2.8 2.8M8.4 15.6l-2.8 2.8" />
+    </svg>
+  )
+}
+function AnchorIcon() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-6 w-6">
+      <circle cx="12" cy="4.5" r="1.8" /><path d="M12 6.3V21M6 12H4a8 8 0 0 0 16 0h-2M8.5 9.5h7" />
+    </svg>
+  )
+}
 export default function Facilities() {
   return (
     <>
+      {/* Hero */}
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
-          <h1 className="text-4xl font-extrabold md:text-5xl" data-cms="Facilities - Hero - Heading">
+          <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Facilities - Hero - Heading">
             {c.facilities_hero_heading}
           </h1>
-          <p className="mt-4 text-lg text-white/80" data-cms="Facilities - Hero - Sub">{c.facilities_hero_sub}</p>
+          <p className="mt-4 text-lg text-white/75" data-cms="Facilities - Hero - Sub">{c.facilities_hero_sub}</p>
         </div>
       </section>
+      <WaveDivider />
 
-      {/* Work bays (repeater) — display names only; booking logic keys off fixed bay IDs */}
+      {/* Work bays — the headline facility for members */}
       <section className="section">
-        <AnimatedSection className="mb-10 max-w-2xl">
+        <AnimatedSection className="mx-auto mb-12 max-w-2xl text-center">
           <span className="eyebrow" data-cms="Facilities - Bays - Label">{c.facilities_bays_label}</span>
-          <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Facilities - Bays - Heading">
+          <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Facilities - Bays - Heading">
             {c.facilities_bays_heading}
           </h2>
           <p className="mt-4 text-navy/70" data-cms="Facilities - Bays - Body">{c.facilities_bays_body}</p>
         </AnimatedSection>
-        <div data-cms-repeater="Facilities - Work Bays" className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+
+        <div data-cms-repeater="Facilities - Work Bays" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {c.work_bays.map((bay, i) => (
-            <div key={i} className="rounded-2xl border border-navy/10 bg-white p-6">
-              <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent font-bold">
-                {i + 1}
+            <div key={i} className="card group relative overflow-hidden p-6">
+              <span className="absolute right-0 top-0 h-16 w-16 -translate-y-8 translate-x-8 rounded-full bg-gold/15 transition-transform group-hover:scale-150" />
+              <div className="relative mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-navy text-gold">
+                <WheelIcon />
               </div>
-              <h3 className="text-lg font-bold" data-cms-field="name">{bay.name}</h3>
-              <p className="mt-1 text-sm text-navy/60" data-cms-field="desc">{bay.desc}</p>
+              <p className="relative text-xs font-semibold uppercase tracking-widest text-accent">Bay {i + 1}</p>
+              <h3 className="relative mt-1 font-display text-xl font-semibold" data-cms-field="name">{bay.name}</h3>
+              <p className="relative mt-1.5 text-sm text-navy/60" data-cms-field="desc">{bay.desc}</p>
             </div>
           ))}
         </div>
-        <div className="mt-10">
-          <Link to="/booking" className="btn-primary">Book a Work Bay</Link>
+
+        <div className="mt-10 flex flex-wrap items-center justify-center gap-4 rounded-2xl bg-navy px-6 py-6 text-center text-white sm:justify-between sm:text-left">
+          <p className="text-lg">
+            Book ahead to lock in the <span className="font-semibold text-gold">$25 member day rate</span>.
+          </p>
+          <Link to="/booking" className="btn-primary shrink-0">Book a Work Bay</Link>
         </div>
       </section>
 
-      {/* Other facilities (repeater) */}
+      {/* Other facilities */}
       <section className="bg-sand">
         <div className="section">
-          <AnimatedSection className="mb-10">
-            <span className="eyebrow" data-cms="Facilities - Other - Label">{c.facilities_other_label}</span>
-            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Facilities - Other - Heading">
+          <AnimatedSection className="mb-12 text-center">
+            <span className="eyebrow justify-center" data-cms="Facilities - Other - Label">{c.facilities_other_label}</span>
+            <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Facilities - Other - Heading">
               {c.facilities_other_heading}
             </h2>
           </AnimatedSection>
-          <div data-cms-repeater="Facilities - Other" className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+          <div data-cms-repeater="Facilities - Other" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {c.facilities_other.map((f, i) => (
-              <div key={i} className="rounded-2xl bg-white p-6 shadow-sm">
-                <h3 className="text-lg font-bold" data-cms-field="title">{f.title}</h3>
-                <p className="mt-2 text-sm text-navy/70" data-cms-field="desc">{f.desc}</p>
+              <div key={i} className="card flex gap-4 p-6">
+                <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-accent/10 text-accent">
+                  <AnchorIcon />
+                </div>
+                <div>
+                  <h3 className="font-display text-lg font-semibold" data-cms-field="title">{f.title}</h3>
+                  <p className="mt-1 text-sm text-navy/65" data-cms-field="desc">{f.desc}</p>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Gallery teaser — full gallery lives on its own page */}
-      <section className="section">
-        <AnimatedSection className="rounded-2xl bg-navy px-6 py-12 text-center text-white">
-          <h2 className="text-2xl font-extrabold md:text-3xl" data-cms="Facilities - Gallery - Heading">
-            {c.facilities_gallery_heading}
-          </h2>
-          <p className="mx-auto mt-3 max-w-xl text-white/80" data-cms="Facilities - Gallery - Sub">
-            {c.facilities_gallery_sub}
-          </p>
-          <Link to="/gallery" className="btn-primary mt-6">View the Gallery</Link>
-        </AnimatedSection>
+      {/* Gallery teaser */}
+      <WaveDivider top="#f2eada" bottom="#0b2545" />
+      <section className="bg-navy">
+        <div className="section text-center text-white">
+          <AnimatedSection>
+            <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Facilities - Gallery - Heading">
+              {c.facilities_gallery_heading}
+            </h2>
+            <p className="mx-auto mt-3 max-w-xl text-white/75" data-cms="Facilities - Gallery - Sub">
+              {c.facilities_gallery_sub}
+            </p>
+            <Link to="/gallery" className="btn-primary mt-6">View the Gallery</Link>
+          </AnimatedSection>
+        </div>
       </section>
     </>
   )

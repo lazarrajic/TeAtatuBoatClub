@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
+import WaveDivider from '../components/WaveDivider.jsx'
 
 export default function Home() {
   return (
@@ -30,15 +31,18 @@ export default function Home() {
         </div>
       </section>
 
+      {/* maritime transition from the hero into the content */}
+      <WaveDivider bottom="#f2eada" />
+
       {/* ─── Stats (repeater — static container anchors section order) ─── */}
       <section className="bg-sand">
-        <div data-cms-repeater="Home - Stats" className="mx-auto grid max-w-6xl gap-6 px-5 py-12 sm:grid-cols-3">
+        <div data-cms-repeater="Home - Stats" className="mx-auto grid max-w-6xl gap-8 px-5 py-14 sm:grid-cols-3">
           {c.home_stats.map((stat, i) => (
             <div key={i} className="text-center">
-              <p className="text-4xl font-extrabold text-accent" data-cms-field="value">
+              <p className="font-display text-5xl font-semibold text-accent" data-cms-field="value">
                 {stat.value}
               </p>
-              <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-navy/60" data-cms-field="label">
+              <p className="mt-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-navy/55" data-cms-field="label">
                 {stat.label}
               </p>
             </div>
@@ -109,8 +113,9 @@ export default function Home() {
           </AnimatedSection>
           <div data-cms-repeater="Home - Facilities - Facilities" className="grid gap-6 md:grid-cols-3">
             {c.home_facilities.map((f, i) => (
-              <div key={i} className="rounded-2xl bg-white p-7 shadow-sm">
-                <h3 className="text-xl font-bold" data-cms-field="title">{f.title}</h3>
+              <div key={i} className="card p-7">
+                <span className="mb-4 block h-1 w-10 rounded bg-gold" />
+                <h3 className="font-display text-xl font-semibold" data-cms-field="title">{f.title}</h3>
                 <p className="mt-2 text-navy/70" data-cms-field="desc">{f.desc}</p>
               </div>
             ))}

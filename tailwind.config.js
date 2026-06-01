@@ -4,18 +4,29 @@ export default {
   theme: {
     extend: {
       colors: {
-        // TODO: confirm real brand colours with Dan. Maritime placeholder palette.
+        // ── Brand palette, sampled from the club crest (TABC logo) ──
+        // Navy = structure/dark sections · Gold = signature accent (buttons,
+        // accents on dark) · Marine = blue accent on light · Sand = warm neutral.
         navy: {
           DEFAULT: '#0b2545',
-          light: '#13355f',
+          light: '#143a63',
           dark: '#071a33',
         },
-        accent: {
-          DEFAULT: '#0a9396',
-          light: '#37b3b6',
-          dark: '#077578',
+        gold: {
+          DEFAULT: '#f8b838',
+          dark: '#e0a020',
+          light: '#ffd479',
         },
-        sand: '#f4f1ea',
+        // `accent` is the marine blue from the pennant — used for labels/links/
+        // highlights on light backgrounds (kept as the `accent` name so existing
+        // utility classes resolve to it).
+        accent: {
+          DEFAULT: '#0070b8',
+          dark: '#005a94',
+          light: '#3392cf',
+        },
+        sand: '#f5f1e8',
+        brandred: '#b80000', // crest red — reserved, used sparingly
       },
       fontFamily: {
         sans: ['"Inter"', 'system-ui', 'sans-serif'],

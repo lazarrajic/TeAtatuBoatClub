@@ -72,7 +72,7 @@ export default function Home() {
       <section className="bg-navy-dark">
         <div className="section">
           <AnimatedSection className="mb-8 text-center text-white">
-            <span className="eyebrow" data-cms="Home - Video - Label">{c.home_video_label}</span>
+            <span className="eyebrow text-gold" data-cms="Home - Video - Label">{c.home_video_label}</span>
             <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - Video - Heading">
               {c.home_video_heading}
             </h2>

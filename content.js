@@ -11,7 +11,7 @@ export default {
   phone: '+64 9 834 4006',
   email: 'office@teatatuboatclub.co.nz',
   address: '32 Bridge Ave, Te Atatū South, Auckland',
-  logo: '/images/logo.svg', // placeholder boat mark — office can replace with the real logo via the CMS
+  logo: '/images/logo.png', // official TABC club crest
   socials: [
     { platform: 'Facebook', url: 'https://www.facebook.com/teatatuboatingclub' },
   ],

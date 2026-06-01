@@ -23,8 +23,9 @@ export default function Pricing() {
             {c.pricing_workbay_heading}
           </h2>
           <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl border-2 border-accent bg-accent/5 p-6 text-center">
-              <p className="text-xs font-semibold uppercase tracking-wide text-accent">Member · Booked</p>
+            <div className="relative rounded-2xl border-2 border-gold bg-gold/10 p-6 text-center">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-3 py-0.5 text-[11px] font-bold uppercase tracking-wide text-navy">Best Rate</span>
+              <p className="text-xs font-semibold uppercase tracking-wide text-gold-dark">Member · Booked</p>
               <p className="mt-2 text-4xl font-extrabold text-navy">
                 <span data-cms="Pricing - Work Bay - Member Booked Rate">{c.pricing_workbay_member_booked_rate}</span>
               </p>

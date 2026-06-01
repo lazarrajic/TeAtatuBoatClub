@@ -77,11 +77,7 @@ export default function Navbar() {
       <header className="sticky top-0 z-50 border-b border-navy/10 bg-white/85 backdrop-blur-md">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-3">
           <Link to="/" className="flex items-center gap-2.5 font-extrabold text-navy">
-            {/* Crest is designed on a dark ground — seat it on a navy chip so it
-                reads correctly on the light header. */}
-            <span className="flex items-center justify-center rounded-lg bg-navy px-1.5 py-1">
-              <img src={c.logo} data-cms="Nav - Brand - Logo" alt={c.company_name} className="h-8 w-auto" />
-            </span>
+            <img src={c.logo} data-cms="Nav - Brand - Logo" alt={c.company_name} className="h-11 w-auto" />
             <span className="hidden text-base leading-tight sm:inline">{c.company_name}</span>
           </Link>
 

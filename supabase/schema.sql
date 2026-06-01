@@ -1,0 +1,77 @@
+-- ╔══════════════════════════════════════════════════════════════════════╗
+-- ║  Te Atatū Boating Club — work-bay booking database (Supabase/Postgres) ║
+-- ║  Run this once in the Supabase SQL editor for a new project.           ║
+-- ╚══════════════════════════════════════════════════════════════════════╝
+
+-- ─── Members (the office maintains this list) ────────────────────────────
+create table if not exists members (
+  id                uuid primary key default gen_random_uuid(),
+  full_name         text not null,
+  membership_number text not null,
+  email             text,                 -- used for the member confirmation email
+  active            boolean not null default true,
+  created_at        timestamptz not null default now()
+);
+
+-- Validation matches on lower(full_name) + membership_number where active.
+create index if not exists idx_members_lookup
+  on members (lower(full_name), membership_number)
+  where active = true;
+
+-- ─── Work bays (seed once; effectively config) ───────────────────────────
+create table if not exists berths (
+  id          int primary key,            -- 1..4 — the booking logic keys off THIS, never the name
+  name        text not null,
+  description text
+);
+
+-- ─── Bookings ────────────────────────────────────────────────────────────
+create table if not exists bookings (
+  id                uuid primary key default gen_random_uuid(),
+  berth_id          int not null references berths(id),
+  slot_date         date not null,
+  slot_period       text not null default 'day',   -- 'day' (current) | future: 'am' | 'pm'
+  member_id         uuid references members(id),
+  member_name       text not null,        -- snapshot at booking time
+  membership_number text not null,        -- snapshot at booking time
+  status            text not null default 'confirmed',  -- 'confirmed' | 'cancelled'
+  created_at        timestamptz not null default now()
+);
+
+-- CRITICAL: atomic double-booking prevention. A second confirmed booking for the
+-- same bay + date + period is rejected by the DB (error 23505), even under a race.
+create unique index if not exists uniq_active_slot
+  on bookings (berth_id, slot_date, slot_period)
+  where status = 'confirmed';
+
+create index if not exists idx_bookings_window
+  on bookings (slot_date)
+  where status = 'confirmed';
+
+-- ─── Seed the four work bays ─────────────────────────────────────────────
+-- TODO: confirm real bay names/descriptions with Dan, then update here + on the
+-- Facilities page in content.js. The IDs 1..4 must stay stable.
+insert into berths (id, name, description) values
+  (1, 'Work Bay 1', 'General work bay.'),
+  (2, 'Work Bay 2', 'General work bay.'),
+  (3, 'Work Bay 3', 'General work bay.'),
+  (4, 'Work Bay 4', 'General work bay.')
+on conflict (id) do nothing;
+
+-- ─── Loading the membership list ─────────────────────────────────────────
+-- Option A: Supabase Dashboard → Table editor → members → Import data from CSV.
+--   Columns expected: full_name, membership_number, email (active defaults true).
+-- Option B: SQL insert, e.g.
+--   insert into members (full_name, membership_number, email) values
+--     ('Jane Smith', '1234', 'jane@example.com');
+--
+-- TODO: get the membership CSV export from Dan/Skedda (with emails for member
+-- confirmation messages) and load it here.
+
+-- ─── Row Level Security ──────────────────────────────────────────────────
+-- All access goes through Netlify Functions using the SERVICE ROLE key, which
+-- bypasses RLS. We therefore keep RLS enabled with NO public policies so the
+-- anon/public key cannot read or write these tables directly.
+alter table members  enable row level security;
+alter table berths   enable row level security;
+alter table bookings enable row level security;

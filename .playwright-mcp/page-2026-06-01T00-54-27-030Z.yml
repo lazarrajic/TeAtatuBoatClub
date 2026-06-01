@@ -1,0 +1,74 @@
+- generic [ref=e3]:
+  - region "top of page" [active]
+  - button "Skip to Main Content"
+  - generic [ref=e10]:
+    - banner [ref=e11]:
+      - generic [ref=e15]:
+        - generic:
+          - generic:
+            - navigation "Site" [ref=e21]:
+              - list [ref=e22]:
+                - listitem [ref=e23] [cursor=pointer]:
+                  - link "HOME" [ref=e24]:
+                    - /url: https://www.teatatuboatclub.co.nz
+                    - paragraph [ref=e27]: HOME
+                - listitem [ref=e28] [cursor=pointer]:
+                  - link "OUR STORY" [ref=e29]:
+                    - /url: https://www.teatatuboatclub.co.nz/our-story
+                    - paragraph [ref=e32]: OUR STORY
+                - listitem [ref=e33] [cursor=pointer]:
+                  - link "GALLERY" [ref=e34]:
+                    - /url: https://www.teatatuboatclub.co.nz/copy-of-gallery
+                    - paragraph [ref=e37]: GALLERY
+                - listitem [ref=e38] [cursor=pointer]:
+                  - link "BOATING FACILITIES" [ref=e39]:
+                    - /url: https://www.teatatuboatclub.co.nz/boating-facilities
+                    - paragraph [ref=e42]: BOATING FACILITIES
+                - listitem [ref=e43] [cursor=pointer]:
+                  - link "MEMBERSHIP" [ref=e44]:
+                    - /url: https://www.teatatuboatclub.co.nz/membership
+                    - paragraph [ref=e47]: MEMBERSHIP
+                - listitem [ref=e48] [cursor=pointer]:
+                  - link "RESTAURANT & BAR" [ref=e49]:
+                    - /url: https://www.teatatuboatclub.co.nz/club-bar
+                    - paragraph [ref=e52]: RESTAURANT & BAR
+                - listitem [ref=e53] [cursor=pointer]:
+                  - link "WHAT'S ON" [ref=e54]:
+                    - /url: https://www.teatatuboatclub.co.nz/events
+                    - paragraph [ref=e57]: WHAT'S ON
+                - listitem [ref=e58] [cursor=pointer]:
+                  - link "CLUB RULES" [ref=e59]:
+                    - /url: https://www.teatatuboatclub.co.nz/club-rules
+                    - paragraph [ref=e62]: CLUB RULES
+                - listitem [ref=e63] [cursor=pointer]:
+                  - link "VENUE HIRE" [ref=e64]:
+                    - /url: https://www.teatatuboatclub.co.nz/venue-hire
+                    - paragraph [ref=e67]: VENUE HIRE
+                - listitem [ref=e68] [cursor=pointer]:
+                  - paragraph [ref=e72]: More
+            - heading "TE ATATU BOATING CLUB Inc." [level=2] [ref=e73]:
+              - generic [ref=e76]: TE ATATU BOATING CLUB Inc.
+    - main [ref=e77]:
+      - generic [ref=e83]:
+        - img "DJI_0027-HDR_Print Ready.jpg" [ref=e88]
+        - generic:
+          - generic:
+            - heading "65th ANNIVERSARY WEEKEND 17th - 19th May 2024" [level=2] [ref=e89]:
+              - generic [ref=e92]: 65th ANNIVERSARY WEEKEND
+              - generic [ref=e93]: 17th - 19th May 2024
+            - region [ref=e100]:
+              - generic [ref=e102]:
+                - generic [ref=e103] [cursor=pointer]:
+                  - button "image"
+                - generic [ref=e109] [cursor=pointer]:
+                  - button
+                - generic [ref=e115] [cursor=pointer]:
+                  - button
+                - generic [ref=e125] [cursor=pointer]:
+                  - button
+                - generic [ref=e131] [cursor=pointer]:
+                  - button
+                - generic [ref=e137] [cursor=pointer]:
+                  - button
+    - contentinfo [ref=e143]
+  - region "bottom of page"

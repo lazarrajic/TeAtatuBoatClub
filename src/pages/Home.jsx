@@ -1,0 +1,144 @@
+import { Link } from 'react-router-dom'
+import c from '../../content.js'
+import AnimatedSection from '../components/AnimatedSection.jsx'
+
+export default function Home() {
+  return (
+    <>
+      {/* ─── Hero ─── */}
+      <section className="relative isolate flex min-h-[80vh] items-center bg-navy text-white">
+        <div
+          className="absolute inset-0 -z-10 bg-cover bg-center opacity-40"
+          style={{ backgroundImage: `url(${c.home_hero_image})` }}
+        />
+        <img src={c.home_hero_image} data-cms="Home - Hero - Image" alt="" className="hidden" />
+        <div className="mx-auto max-w-6xl px-5 py-24">
+          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl" data-cms="Home - Hero - Heading">
+            {c.home_hero_heading}
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg text-white/80" data-cms="Home - Hero - Sub">
+            {c.home_hero_sub}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-4">
+            <Link to="/booking" className="btn-primary" data-cms="Home - Hero - CTA 1">
+              {c.home_hero_cta1}
+            </Link>
+            <Link to="/membership" className="btn-secondary" data-cms="Home - Hero - CTA 2">
+              {c.home_hero_cta2}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Stats (fixed numbered array) ─── */}
+      <section className="bg-sand">
+        <div className="mx-auto grid max-w-6xl gap-6 px-5 py-12 sm:grid-cols-3">
+          {c.home_stats.map((stat, i) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-4xl font-extrabold text-accent" data-cms={`Home - Stats - Value ${i + 1}`}>
+                {stat.value}
+              </p>
+              <p className="mt-1 text-sm font-semibold uppercase tracking-wide text-navy/60" data-cms={`Home - Stats - Label ${i + 1}`}>
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ─── About strip ─── */}
+      <section className="section grid items-center gap-12 md:grid-cols-2">
+        <AnimatedSection>
+          <span className="eyebrow" data-cms="Home - About - Label">{c.home_about_label}</span>
+          <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - About - Heading">
+            {c.home_about_heading}
+          </h2>
+          <p className="mt-4 text-navy/70" data-cms="Home - About - Body">{c.home_about_body}</p>
+          <Link to="/about" className="btn-outline mt-6" data-cms="Home - About - CTA">
+            {c.home_about_cta}
+          </Link>
+        </AnimatedSection>
+        <AnimatedSection delay={120}>
+          <img
+            src={c.home_about_image}
+            data-cms="Home - About - Image"
+            alt="The club"
+            className="aspect-[4/3] w-full rounded-2xl bg-navy/5 object-cover"
+          />
+        </AnimatedSection>
+      </section>
+
+      {/* ─── Video (promo clip, not the hero) ─── */}
+      <section className="bg-navy-dark">
+        <div className="section">
+          <AnimatedSection className="mb-8 text-center text-white">
+            <span className="eyebrow" data-cms="Home - Video - Label">{c.home_video_label}</span>
+            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - Video - Heading">
+              {c.home_video_heading}
+            </h2>
+            <p className="mx-auto mt-3 max-w-2xl text-white/70" data-cms="Home - Video - Sub">
+              {c.home_video_sub}
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={120}>
+            <div className="mx-auto max-w-4xl overflow-hidden rounded-2xl shadow-2xl ring-1 ring-white/10">
+              <video
+                className="aspect-video w-full bg-black"
+                src={c.home_video}
+                poster={c.home_video_poster}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls
+                preload="auto"
+              />
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ─── Facilities (repeater) ─── */}
+      <section className="bg-sand">
+        <div className="section">
+          <AnimatedSection className="mb-10 text-center">
+            <span className="eyebrow" data-cms="Home - Facilities - Label">{c.home_facilities_label}</span>
+            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - Facilities - Heading">
+              {c.home_facilities_heading}
+            </h2>
+          </AnimatedSection>
+          <div data-cms-repeater="Home - Facilities - Facilities" className="grid gap-6 md:grid-cols-3">
+            {c.home_facilities.map((f, i) => (
+              <div key={i} className="rounded-2xl bg-white p-7 shadow-sm">
+                <h3 className="text-xl font-bold" data-cms-field="title">{f.title}</h3>
+                <p className="mt-2 text-navy/70" data-cms-field="desc">{f.desc}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-10 text-center">
+            <Link to="/facilities" className="btn-outline" data-cms="Home - Facilities - CTA">
+              {c.home_facilities_cta}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── CTA banner ─── */}
+      <section className="bg-navy text-white">
+        <div className="section text-center">
+          <AnimatedSection>
+            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - CTA - Heading">
+              {c.home_cta_heading}
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-white/80" data-cms="Home - CTA - Body">
+              {c.home_cta_body}
+            </p>
+            <Link to="/booking" className="btn-primary mt-8" data-cms="Home - CTA - Button">
+              {c.home_cta_button}
+            </Link>
+          </AnimatedSection>
+        </div>
+      </section>
+    </>
+  )
+}

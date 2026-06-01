@@ -1,0 +1,97 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - navigation [ref=e5]:
+      - link "Te Atatū Boating Club" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "Te Atatū Boating Club" [ref=e7]
+      - button "Open menu" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - main [ref=e11]:
+    - generic [ref=e13]:
+      - heading "Contact Us" [level=1] [ref=e14]
+      - paragraph [ref=e15]: Get in touch with the club office.
+    - generic [ref=e16]:
+      - generic [ref=e17]:
+        - heading "Club Office" [level=2] [ref=e18]
+        - generic [ref=e19]:
+          - generic [ref=e20]:
+            - term [ref=e21]: Email
+            - definition [ref=e22]:
+              - link "office@teatatuboatclub.co.nz" [ref=e23] [cursor=pointer]:
+                - /url: mailto:office@teatatuboatclub.co.nz
+          - generic [ref=e24]:
+            - term [ref=e25]: Phone
+            - definition [ref=e26]:
+              - link "+64 9 834 4006" [ref=e27] [cursor=pointer]:
+                - /url: tel:+6498344006
+          - generic [ref=e28]:
+            - term [ref=e29]: Address
+            - definition [ref=e30]: 32 Bridge Ave, Te Atatū South, Auckland 0610
+        - iframe [ref=e32]:
+          
+      - generic [ref=e34]:
+        - heading "Send an Enquiry" [level=2] [ref=e35]
+        - generic [ref=e36]:
+          - textbox "Your name" [ref=e37]
+          - textbox "Your email" [ref=e38]
+          - textbox "How can we help?" [ref=e39]
+          - button "Send Message" [ref=e40] [cursor=pointer]
+  - contentinfo [ref=e41]:
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - paragraph [ref=e44]: Te Atatū Boating Club
+        - paragraph [ref=e45]: A member-run boating club in Te Atatū South, Auckland — boating facilities, bar, restaurant and functions since the 1960s.
+      - generic [ref=e46]:
+        - paragraph [ref=e47]: Boating
+        - list [ref=e48]:
+          - listitem [ref=e49]:
+            - link "Facilities" [ref=e50] [cursor=pointer]:
+              - /url: /facilities
+          - listitem [ref=e51]:
+            - link "Pricing" [ref=e52] [cursor=pointer]:
+              - /url: /pricing
+          - listitem [ref=e53]:
+            - link "Book a Work Bay" [ref=e54] [cursor=pointer]:
+              - /url: /booking
+          - listitem [ref=e55]:
+            - link "Membership" [ref=e56] [cursor=pointer]:
+              - /url: /membership
+          - listitem [ref=e57]:
+            - link "Club Rules" [ref=e58] [cursor=pointer]:
+              - /url: /club-rules
+      - generic [ref=e59]:
+        - paragraph [ref=e60]: The Club
+        - list [ref=e61]:
+          - listitem [ref=e62]:
+            - link "Our Story" [ref=e63] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e64]:
+            - link "Restaurant & Bar" [ref=e65] [cursor=pointer]:
+              - /url: /restaurant
+          - listitem [ref=e66]:
+            - link "Venue Hire" [ref=e67] [cursor=pointer]:
+              - /url: /venue-hire
+          - listitem [ref=e68]:
+            - link "What's On" [ref=e69] [cursor=pointer]:
+              - /url: /events
+          - listitem [ref=e70]:
+            - link "Gallery" [ref=e71] [cursor=pointer]:
+              - /url: /gallery
+      - generic [ref=e72]:
+        - paragraph [ref=e73]: Contact
+        - list [ref=e74]:
+          - listitem [ref=e75]:
+            - link "office@teatatuboatclub.co.nz" [ref=e76] [cursor=pointer]:
+              - /url: mailto:office@teatatuboatclub.co.nz
+          - listitem [ref=e77]:
+            - link "+64 9 834 4006" [ref=e78] [cursor=pointer]:
+              - /url: tel:+6498344006
+          - listitem [ref=e79]: 32 Bridge Ave, Te Atatū South, Auckland
+      - generic [ref=e80]:
+        - paragraph [ref=e81]: Follow
+        - list [ref=e82]:
+          - listitem [ref=e83]:
+            - link "Facebook" [ref=e84] [cursor=pointer]:
+              - /url: https://www.facebook.com/teatatuboatingclub
+              - img [ref=e85]
+    - generic [ref=e87]: © Te Atatū Boating Club. All rights reserved.

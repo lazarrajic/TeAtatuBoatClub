@@ -1,0 +1,108 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - navigation [ref=e5]:
+      - link "Te Atatū Boating Club" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - img "Te Atatū Boating Club" [ref=e7]
+      - button "Open menu" [ref=e8] [cursor=pointer]:
+        - img [ref=e9]
+  - main [ref=e11]:
+    - generic [ref=e13]:
+      - heading "Restaurant & Bar" [level=1] [ref=e14]
+      - paragraph [ref=e15]: The Members Bar and High Tide Kitchen — open to members and their guests.
+    - paragraph [ref=e18]: Our licensed club rooms and the High Tide Kitchen are at the heart of the club. Drop in for a drink at the bar or a meal with the family, with views out over the harbour.
+    - generic [ref=e20]:
+      - generic [ref=e22]:
+        - heading "Club Rooms — Bar Hours" [level=2] [ref=e23]
+        - list [ref=e24]:
+          - listitem [ref=e25]:
+            - generic [ref=e26]: Monday & Tuesday
+            - generic [ref=e27]: From 3pm
+          - listitem [ref=e28]:
+            - generic [ref=e29]: Wednesday – Sunday
+            - generic [ref=e30]: From 12 midday
+      - generic [ref=e32]:
+        - heading "High Tide Kitchen" [level=2] [ref=e33]
+        - paragraph [ref=e34]: Bistro meals through the week.
+        - list [ref=e35]:
+          - listitem [ref=e36]:
+            - generic [ref=e37]: Monday & Tuesday
+            - generic [ref=e38]: Closed
+          - listitem [ref=e39]:
+            - generic [ref=e40]: Wednesday
+            - generic [ref=e41]: 4pm – 7:30pm
+          - listitem [ref=e42]:
+            - generic [ref=e43]: Thursday
+            - generic [ref=e44]: 4pm – 9pm
+          - listitem [ref=e45]:
+            - generic [ref=e46]: Friday – Sunday
+            - generic [ref=e47]: 12 midday – 8pm
+    - generic [ref=e48]:
+      - heading "Menus" [level=2] [ref=e50]
+      - generic [ref=e51]:
+        - img "Dining menu" [ref=e52]
+        - img "Catering menu" [ref=e53]
+    - generic [ref=e56]:
+      - heading "Come down for a meal" [level=2] [ref=e57]
+      - paragraph [ref=e58]: Members and guests welcome. Check the hours above and we’ll see you at the bar.
+      - link "Find Us" [ref=e59] [cursor=pointer]:
+        - /url: /contact
+  - contentinfo [ref=e60]:
+    - generic [ref=e61]:
+      - generic [ref=e62]:
+        - paragraph [ref=e63]: Te Atatū Boating Club
+        - paragraph [ref=e64]: A member-run boating club in Te Atatū South, Auckland — boating facilities, bar, restaurant and functions since the 1960s.
+      - generic [ref=e65]:
+        - paragraph [ref=e66]: Boating
+        - list [ref=e67]:
+          - listitem [ref=e68]:
+            - link "Facilities" [ref=e69] [cursor=pointer]:
+              - /url: /facilities
+          - listitem [ref=e70]:
+            - link "Pricing" [ref=e71] [cursor=pointer]:
+              - /url: /pricing
+          - listitem [ref=e72]:
+            - link "Book a Work Bay" [ref=e73] [cursor=pointer]:
+              - /url: /booking
+          - listitem [ref=e74]:
+            - link "Membership" [ref=e75] [cursor=pointer]:
+              - /url: /membership
+          - listitem [ref=e76]:
+            - link "Club Rules" [ref=e77] [cursor=pointer]:
+              - /url: /club-rules
+      - generic [ref=e78]:
+        - paragraph [ref=e79]: The Club
+        - list [ref=e80]:
+          - listitem [ref=e81]:
+            - link "Our Story" [ref=e82] [cursor=pointer]:
+              - /url: /about
+          - listitem [ref=e83]:
+            - link "Restaurant & Bar" [ref=e84] [cursor=pointer]:
+              - /url: /restaurant
+          - listitem [ref=e85]:
+            - link "Venue Hire" [ref=e86] [cursor=pointer]:
+              - /url: /venue-hire
+          - listitem [ref=e87]:
+            - link "What's On" [ref=e88] [cursor=pointer]:
+              - /url: /events
+          - listitem [ref=e89]:
+            - link "Gallery" [ref=e90] [cursor=pointer]:
+              - /url: /gallery
+      - generic [ref=e91]:
+        - paragraph [ref=e92]: Contact
+        - list [ref=e93]:
+          - listitem [ref=e94]:
+            - link "office@teatatuboatclub.co.nz" [ref=e95] [cursor=pointer]:
+              - /url: mailto:office@teatatuboatclub.co.nz
+          - listitem [ref=e96]:
+            - link "+64 9 834 4006" [ref=e97] [cursor=pointer]:
+              - /url: tel:+6498344006
+          - listitem [ref=e98]: 32 Bridge Ave, Te Atatū South, Auckland
+      - generic [ref=e99]:
+        - paragraph [ref=e100]: Follow
+        - list [ref=e101]:
+          - listitem [ref=e102]:
+            - link "Facebook" [ref=e103] [cursor=pointer]:
+              - /url: https://www.facebook.com/teatatuboatingclub
+              - img [ref=e104]
+    - generic [ref=e106]: © Te Atatū Boating Club. All rights reserved.

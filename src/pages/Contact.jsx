@@ -2,18 +2,44 @@ import { useState } from 'react'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 
+const encode = (data) =>
+  Object.keys(data)
+    .map((k) => encodeURIComponent(k) + '=' + encodeURIComponent(data[k]))
+    .join('&')
+
 export default function Contact() {
   const [sent, setSent] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
 
-  // No backend enquiry endpoint yet — opens the visitor's email client as a
-  // mailto fallback. TODO: wire to a Netlify Forms or function handler if Dan wants.
-  function handleSubmit(e) {
+  // Submits to Netlify Forms (form "contact", declared in index.html).
+  // Submissions collect in the Netlify dashboard — email notifications are OFF,
+  // so nothing is sent to the club. Falls back to a mailto link on failure.
+  async function handleSubmit(e) {
     e.preventDefault()
-    const data = new FormData(e.target)
-    const subject = encodeURIComponent(`Website enquiry from ${data.get('name')}`)
-    const body = encodeURIComponent(`${data.get('message')}\n\n— ${data.get('name')} (${data.get('email')})`)
-    window.location.href = `mailto:${c.contact_office_email}?subject=${subject}&body=${body}`
-    setSent(true)
+    setError('')
+    const form = e.target
+    const data = new FormData(form)
+    if (data.get('bot-field')) return // honeypot tripped
+    setSending(true)
+    try {
+      const res = await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: encode({
+          'form-name': 'contact',
+          name: data.get('name'),
+          email: data.get('email'),
+          message: data.get('message'),
+        }),
+      })
+      if (!res.ok) throw new Error('bad status')
+      setSent(true)
+    } catch {
+      setError('Something went wrong sending your message. Please email us directly.')
+    } finally {
+      setSending(false)
+    }
   }
 
   return (
@@ -74,15 +100,27 @@ export default function Contact() {
             </h2>
             {sent ? (
               <p className="mt-6 rounded-xl bg-accent/10 p-4 text-sm text-accent-dark">
-                Thanks — your email app should have opened. If not, email us directly at {c.contact_office_email}.
+                Thanks for getting in touch — we’ve received your message and the office will get back to you soon.
               </p>
             ) : (
-              <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-                <input name="name" required placeholder="Your name" className="w-full rounded-xl border border-navy/15 px-4 py-3" />
-                <input name="email" type="email" required placeholder="Your email" className="w-full rounded-xl border border-navy/15 px-4 py-3" />
-                <textarea name="message" required rows={5} placeholder="How can we help?" className="w-full rounded-xl border border-navy/15 px-4 py-3" />
-                <button type="submit" className="btn-primary w-full" data-cms="Contact - Form - Submit">
-                  {c.contact_form_submit}
+              <form
+                name="contact"
+                method="POST"
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+                className="mt-6 space-y-4"
+              >
+                {/* Honeypot — hidden from humans, bots fill it and get dropped */}
+                <p className="hidden">
+                  <label>Don’t fill this out: <input name="bot-field" /></label>
+                </p>
+                <input name="name" required placeholder="Your name" className="w-full rounded-xl border border-navy/15 px-4 py-3 focus:border-accent focus:outline-none" />
+                <input name="email" type="email" required placeholder="Your email" className="w-full rounded-xl border border-navy/15 px-4 py-3 focus:border-accent focus:outline-none" />
+                <textarea name="message" required rows={5} placeholder="How can we help?" className="w-full rounded-xl border border-navy/15 px-4 py-3 focus:border-accent focus:outline-none" />
+                {error && <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
+                <button type="submit" disabled={sending} className="btn-primary w-full disabled:opacity-60" data-cms="Contact - Form - Submit">
+                  {sending ? 'Sending…' : c.contact_form_submit}
                 </button>
               </form>
             )}

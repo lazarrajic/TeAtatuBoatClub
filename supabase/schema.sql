@@ -69,9 +69,22 @@ on conflict (id) do nothing;
 -- confirmation messages) and load it here.
 
 -- ─── Row Level Security ──────────────────────────────────────────────────
--- All access goes through Netlify Functions using the SERVICE ROLE key, which
--- bypasses RLS. We therefore keep RLS enabled with NO public policies so the
--- anon/public key cannot read or write these tables directly.
+-- All access goes through Netlify Functions using the SERVICE ROLE / secret key.
+-- We keep RLS enabled with NO public policies so the anon/public key cannot read
+-- or write these tables directly.
 alter table members  enable row level security;
 alter table berths   enable row level security;
 alter table bookings enable row level security;
+
+-- ─── Grants for the booking functions' role ───────────────────────────────
+-- The functions connect with the service/secret key (service_role). If the
+-- project was created with "Automatically expose new tables" DISABLED
+-- (recommended — keeps the public anon API out of these tables), service_role
+-- needs explicit grants too. anon/authenticated are intentionally NOT granted.
+grant usage on schema public to service_role;
+grant select, insert, update, delete on all tables in schema public to service_role;
+grant usage, select on all sequences in schema public to service_role;
+alter default privileges in schema public
+  grant select, insert, update, delete on tables to service_role;
+alter default privileges in schema public
+  grant usage, select on sequences to service_role;

@@ -11,7 +11,7 @@ import SuccessScreen from './SuccessScreen.jsx'
 export default function BookingWidget({ fallback }) {
   const [step, setStep] = useState('gate') // gate | grid | confirm | success
   const [member, setMember] = useState(null)
-  const [selection, setSelection] = useState(null)
+  const [selections, setSelections] = useState(null) // array of selected slots
   const [booking, setBooking] = useState(null)
 
   return (
@@ -28,17 +28,17 @@ export default function BookingWidget({ fallback }) {
       {step === 'grid' && member && (
         <AvailabilityGrid
           member={member}
-          onSelect={(sel) => {
-            setSelection(sel)
+          onSelect={(sels) => {
+            setSelections(sels)
             setStep('confirm')
           }}
         />
       )}
 
-      {step === 'confirm' && member && selection && (
+      {step === 'confirm' && member && selections && (
         <ConfirmScreen
           member={member}
-          selection={selection}
+          selections={selections}
           fallback={fallback}
           onBack={() => setStep('grid')}
           onSuccess={(b) => {
@@ -52,7 +52,7 @@ export default function BookingWidget({ fallback }) {
         <SuccessScreen
           booking={booking}
           onBookAnother={() => {
-            setSelection(null)
+            setSelections(null)
             setBooking(null)
             setStep('grid')
           }}

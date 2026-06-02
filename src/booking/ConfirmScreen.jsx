@@ -4,18 +4,17 @@ import { createBooking } from './api.js'
 
 function formatDate(iso) {
   return new Date(`${iso}T00:00:00`).toLocaleDateString('en-NZ', {
-    weekday: 'long',
+    weekday: 'short',
     day: 'numeric',
-    month: 'long',
-    year: 'numeric',
+    month: 'short',
   })
 }
 
 // Step 3 — confirm. Shows the LIVE member rate + notices fetched from the CMS
-// at runtime (falling back to content.js values passed in `fallback`), and gates
-// the confirm button behind a required acknowledgement checkbox.
-export default function ConfirmScreen({ member, selection, fallback, onBack, onSuccess }) {
-  // Map content.js defaults → the CMS keys the office actually edits.
+// at runtime (falling back to content.js values passed in `fallback`), lists
+// every selected day with a total, and gates the confirm button behind a
+// required acknowledgement checkbox.
+export default function ConfirmScreen({ member, selections, fallback, onBack, onSuccess }) {
   const { content } = useCmsContent({
     'Pricing - Work Bay - Member Booked Rate': fallback.rate,
     'Pricing - Work Bay - Unit': fallback.unit,
@@ -30,6 +29,12 @@ export default function ConfirmScreen({ member, selection, fallback, onBack, onS
   const cancelNotice = content['Booking - Notice - Cancellation']
   const officeEmail = content['Contact - Office - Email']
 
+  const count = selections.length
+  // Compute an estimated total from the rate string (e.g. "$25" → 25).
+  const rateNum = parseFloat(String(rate).replace(/[^0-9.]/g, ''))
+  const currency = (String(rate).match(/^[^\d]*/) || [''])[0] || ''
+  const total = Number.isFinite(rateNum) ? `${currency}${(rateNum * count).toFixed(0)}` : null
+
   const [ack, setAck] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -41,15 +46,12 @@ export default function ConfirmScreen({ member, selection, fallback, onBack, onS
       const res = await createBooking({
         fullName: member.fullName,
         membershipNumber: member.membershipNumber,
-        berthId: selection.berthId,
-        slotDate: selection.slotDate,
-        slotPeriod: selection.period,
         acknowledged: ack,
+        slots: selections.map((s) => ({ berthId: s.berthId, slotDate: s.slotDate, slotPeriod: s.period })),
       })
       if (res.ok) onSuccess(res.booking)
       else {
         setError(res.error || 'Could not complete the booking.')
-        // If the slot was taken in a race, send the member back to re-pick.
         if (res.code === 'taken') setTimeout(onBack, 1800)
       }
     } catch {
@@ -65,13 +67,32 @@ export default function ConfirmScreen({ member, selection, fallback, onBack, onS
         ← Back to availability
       </button>
 
-      <h2 className="text-xl font-bold text-navy">Confirm your booking</h2>
+      <h2 className="text-xl font-semibold text-navy">Confirm your booking</h2>
+      <p className="mt-1 text-sm text-navy/60">
+        {count} day{count !== 1 ? 's' : ''} for {member.fullName}.
+      </p>
 
-      <dl className="mt-5 divide-y divide-navy/5 rounded-xl bg-sand p-4 text-sm">
-        <div className="flex justify-between py-2"><dt className="text-navy/60">Work bay</dt><dd className="font-semibold">{selection.berthName}</dd></div>
-        <div className="flex justify-between py-2"><dt className="text-navy/60">Date</dt><dd className="font-semibold">{formatDate(selection.slotDate)}</dd></div>
-        <div className="flex justify-between py-2"><dt className="text-navy/60">Member</dt><dd className="font-semibold">{member.fullName}</dd></div>
-        <div className="flex justify-between py-2"><dt className="text-navy/60">Member rate</dt><dd className="font-semibold text-accent-dark">{rate} {unit}</dd></div>
+      {/* Selected days */}
+      <ul className="mt-5 max-h-56 divide-y divide-navy/5 overflow-y-auto rounded-xl bg-sand p-2 text-sm">
+        {selections.map((s, i) => (
+          <li key={i} className="flex items-center justify-between px-2 py-2">
+            <span className="font-semibold text-navy">{s.berthName}</span>
+            <span className="text-navy/70">{formatDate(s.slotDate)}</span>
+          </li>
+        ))}
+      </ul>
+
+      {/* Price */}
+      <dl className="mt-4 space-y-1.5 rounded-xl border border-navy/10 p-4 text-sm">
+        <div className="flex justify-between"><dt className="text-navy/60">Member rate</dt><dd className="font-semibold">{rate} {unit}</dd></div>
+        <div className="flex justify-between"><dt className="text-navy/60">Days</dt><dd className="font-semibold">× {count}</dd></div>
+        {total && (
+          <div className="flex justify-between border-t border-navy/10 pt-1.5 text-base">
+            <dt className="font-semibold text-navy">Estimated total</dt>
+            <dd className="font-bold text-accent-dark">{total}</dd>
+          </div>
+        )}
+        <p className="pt-1 text-xs text-navy/45">Invoiced by the club office — no payment is taken online.</p>
       </dl>
 
       <div className="mt-5 space-y-3 text-sm text-navy/70">
@@ -99,7 +120,7 @@ export default function ConfirmScreen({ member, selection, fallback, onBack, onS
         disabled={!ack || busy}
         className="btn-primary mt-5 w-full disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {busy ? 'Confirming…' : 'Confirm booking'}
+        {busy ? 'Confirming…' : `Confirm ${count} booking${count !== 1 ? 's' : ''}`}
       </button>
     </div>
   )

@@ -1,9 +1,13 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
+import Lightbox from '../components/Lightbox.jsx'
 
 export default function Restaurant() {
+  const [menu, setMenu] = useState(null)
+  const menus = [c.restaurant_menu_dine_image, c.restaurant_menu_catering_image]
   return (
     <>
       <section className="bg-navy py-20 text-center text-white">
@@ -68,19 +72,24 @@ export default function Restaurant() {
           </h2>
         </AnimatedSection>
         <div className="grid gap-6 sm:grid-cols-2">
-          <img
-            src={c.restaurant_menu_dine_image}
-            data-cms="Restaurant - Menus - Dine Image"
-            alt="Dining menu"
-            className="w-full rounded-2xl border border-navy/10 bg-navy/5 object-cover"
-          />
-          <img
-            src={c.restaurant_menu_catering_image}
-            data-cms="Restaurant - Menus - Catering Image"
-            alt="Catering menu"
-            className="w-full rounded-2xl border border-navy/10 bg-navy/5 object-cover"
-          />
+          <button type="button" onClick={() => setMenu(0)} className="group block focus:outline-none" aria-label="Enlarge dining menu">
+            <img
+              src={c.restaurant_menu_dine_image}
+              data-cms="Restaurant - Menus - Dine Image"
+              alt="Dining menu"
+              className="w-full cursor-zoom-in rounded-2xl border border-navy/10 bg-navy/5 object-cover transition-shadow group-hover:shadow-lg"
+            />
+          </button>
+          <button type="button" onClick={() => setMenu(1)} className="group block focus:outline-none" aria-label="Enlarge catering menu">
+            <img
+              src={c.restaurant_menu_catering_image}
+              data-cms="Restaurant - Menus - Catering Image"
+              alt="Catering menu"
+              className="w-full cursor-zoom-in rounded-2xl border border-navy/10 bg-navy/5 object-cover transition-shadow group-hover:shadow-lg"
+            />
+          </button>
         </div>
+        <p className="mt-4 text-center text-sm text-navy/50">Tap a menu to enlarge.</p>
       </section>
 
       {/* CTA */}
@@ -99,6 +108,8 @@ export default function Restaurant() {
           </AnimatedSection>
         </div>
       </section>
+
+      <Lightbox items={menus} index={menu} setIndex={setMenu} />
     </>
   )
 }

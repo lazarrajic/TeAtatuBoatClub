@@ -14,7 +14,7 @@ export default function Home() {
         />
         <img src={c.home_hero_image} data-cms="Home - Hero - Image" alt="" className="hidden" />
         <div className="mx-auto max-w-6xl px-5 py-24">
-          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl" data-cms="Home - Hero - Heading">
+          <h1 className="max-w-3xl text-4xl font-semibold leading-tight md:text-6xl" data-cms="Home - Hero - Heading">
             {c.home_hero_heading}
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-white/80" data-cms="Home - Hero - Sub">
@@ -54,7 +54,7 @@ export default function Home() {
       <section className="section grid items-center gap-12 md:grid-cols-2">
         <AnimatedSection>
           <span className="eyebrow" data-cms="Home - About - Label">{c.home_about_label}</span>
-          <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - About - Heading">
+          <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Home - About - Heading">
             {c.home_about_heading}
           </h2>
           <p className="mt-4 text-navy/70" data-cms="Home - About - Body">{c.home_about_body}</p>
@@ -77,7 +77,7 @@ export default function Home() {
         <div className="section">
           <AnimatedSection className="mb-8 text-center text-white">
             <span className="eyebrow text-gold" data-cms="Home - Video - Label">{c.home_video_label}</span>
-            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - Video - Heading">
+            <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Home - Video - Heading">
               {c.home_video_heading}
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-white/70" data-cms="Home - Video - Sub">
@@ -107,7 +107,7 @@ export default function Home() {
         <div className="section">
           <AnimatedSection className="mb-10 text-center">
             <span className="eyebrow" data-cms="Home - Facilities - Label">{c.home_facilities_label}</span>
-            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - Facilities - Heading">
+            <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Home - Facilities - Heading">
               {c.home_facilities_heading}
             </h2>
           </AnimatedSection>
@@ -132,7 +132,7 @@ export default function Home() {
       <section className="bg-navy text-white">
         <div className="section text-center">
           <AnimatedSection>
-            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Home - CTA - Heading">
+            <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Home - CTA - Heading">
               {c.home_cta_heading}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-white/80" data-cms="Home - CTA - Body">

@@ -1,18 +1,20 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
+import WaveDivider from '../components/WaveDivider.jsx'
 
 export default function Restaurant() {
   return (
     <>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
-          <h1 className="text-4xl font-extrabold md:text-5xl" data-cms="Restaurant - Hero - Heading">
+          <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Restaurant - Hero - Heading">
             {c.restaurant_hero_heading}
           </h1>
-          <p className="mt-4 text-lg text-white/80" data-cms="Restaurant - Hero - Sub">{c.restaurant_hero_sub}</p>
+          <p className="mt-4 text-lg text-white/75" data-cms="Restaurant - Hero - Sub">{c.restaurant_hero_sub}</p>
         </div>
       </section>
+      <WaveDivider />
 
       <section className="section mx-auto max-w-3xl text-center">
         <AnimatedSection>
@@ -24,8 +26,8 @@ export default function Restaurant() {
       <section className="bg-sand">
         <div className="section grid gap-8 md:grid-cols-2">
           <AnimatedSection>
-            <div className="rounded-2xl bg-white p-7 shadow-sm">
-              <h2 className="text-xl font-extrabold" data-cms="Restaurant - Club Rooms - Heading">
+            <div className="card p-7">
+              <h2 className="text-xl font-semibold" data-cms="Restaurant - Club Rooms - Heading">
                 {c.restaurant_clubrooms_heading}
               </h2>
               <ul data-cms-repeater="Restaurant - Club Rooms Hours" className="mt-4 divide-y divide-navy/5">
@@ -40,8 +42,8 @@ export default function Restaurant() {
           </AnimatedSection>
 
           <AnimatedSection delay={120}>
-            <div className="rounded-2xl bg-white p-7 shadow-sm">
-              <h2 className="text-xl font-extrabold" data-cms="Restaurant - Kitchen - Heading">
+            <div className="card p-7">
+              <h2 className="text-xl font-semibold" data-cms="Restaurant - Kitchen - Heading">
                 {c.restaurant_kitchen_heading}
               </h2>
               <p className="mt-1 text-sm text-navy/60" data-cms="Restaurant - Kitchen - Sub">{c.restaurant_kitchen_sub}</p>
@@ -61,7 +63,7 @@ export default function Restaurant() {
       {/* Menus */}
       <section className="section">
         <AnimatedSection className="mb-8 text-center">
-          <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Restaurant - Menus - Heading">
+          <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Restaurant - Menus - Heading">
             {c.restaurant_menu_heading}
           </h2>
         </AnimatedSection>
@@ -85,7 +87,7 @@ export default function Restaurant() {
       <section className="bg-navy text-white">
         <div className="section text-center">
           <AnimatedSection>
-            <h2 className="text-3xl font-extrabold md:text-4xl" data-cms="Restaurant - CTA - Heading">
+            <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Restaurant - CTA - Heading">
               {c.restaurant_cta_heading}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-white/80" data-cms="Restaurant - CTA - Body">

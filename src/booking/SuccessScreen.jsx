@@ -15,7 +15,7 @@ export default function SuccessScreen({ booking, onBookAnother }) {
           <path d="M5 13l4 4L19 7" />
         </svg>
       </div>
-      <h2 className="mt-4 text-2xl font-extrabold text-navy">Booking confirmed</h2>
+      <h2 className="mt-4 text-2xl font-semibold text-navy">Booking confirmed</h2>
       <p className="mt-2 text-navy/70">
         {booking.bay} on {formatDate(booking.date)} is reserved for you. The office has been notified and will invoice you.
       </p>

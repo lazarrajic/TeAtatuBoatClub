@@ -1,5 +1,6 @@
 import c from '../../content.js'
 import BookingWidget from '../booking/BookingWidget.jsx'
+import WaveDivider from '../components/WaveDivider.jsx'
 
 // The ONLY CMS-editable content on this page is the static framing text below
 // (heading, "how it works", and the two notices). Everything inside
@@ -12,12 +13,13 @@ export default function Booking() {
     <>
       <section className="bg-navy py-16 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
-          <h1 className="text-4xl font-extrabold md:text-5xl" data-cms="Booking - Hero - Heading">
+          <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Booking - Hero - Heading">
             {c.booking_hero_heading}
           </h1>
-          <p className="mt-4 text-lg text-white/80" data-cms="Booking - Hero - Sub">{c.booking_hero_sub}</p>
+          <p className="mt-4 text-lg text-white/75" data-cms="Booking - Hero - Sub">{c.booking_hero_sub}</p>
         </div>
       </section>
+      <WaveDivider />
 
       <section className="section mx-auto max-w-5xl">
         <div className="mb-10 rounded-2xl border border-navy/10 bg-sand p-6">

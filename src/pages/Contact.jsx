@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
+import WaveDivider from '../components/WaveDivider.jsx'
 
 const encode = (data) =>
   Object.keys(data)
@@ -46,17 +47,18 @@ export default function Contact() {
     <>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
-          <h1 className="text-4xl font-extrabold md:text-5xl" data-cms="Contact - Hero - Heading">
+          <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Contact - Hero - Heading">
             {c.contact_hero_heading}
           </h1>
-          <p className="mt-4 text-lg text-white/80" data-cms="Contact - Hero - Sub">{c.contact_hero_sub}</p>
+          <p className="mt-4 text-lg text-white/75" data-cms="Contact - Hero - Sub">{c.contact_hero_sub}</p>
         </div>
       </section>
+      <WaveDivider />
 
       <section className="section grid gap-12 md:grid-cols-2">
         {/* Office details */}
         <AnimatedSection>
-          <h2 className="text-2xl font-extrabold" data-cms="Contact - Office - Heading">
+          <h2 className="text-2xl font-semibold" data-cms="Contact - Office - Heading">
             {c.contact_office_heading}
           </h2>
           <dl className="mt-6 space-y-4 text-navy/80">
@@ -95,7 +97,7 @@ export default function Contact() {
         {/* Enquiry form */}
         <AnimatedSection delay={120}>
           <div className="rounded-2xl bg-sand p-7">
-            <h2 className="text-2xl font-extrabold" data-cms="Contact - Form - Heading">
+            <h2 className="text-2xl font-semibold" data-cms="Contact - Form - Heading">
               {c.contact_form_heading}
             </h2>
             {sent ? (

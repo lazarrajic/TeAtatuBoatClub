@@ -1,12 +1,15 @@
 import { useState, useMemo } from 'react'
 import c from '../../content.js'
-import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 import Lightbox from '../components/Lightbox.jsx'
 
+// Resolve a gallery item to an image src — tolerates the content.js seed shape
+// ({ image }), the CMS gallery shape ({ url, album }), or a plain string.
+const itemSrc = (item) => (typeof item === 'string' ? item : item.url || item.image)
+
 export default function Gallery() {
   const [active, setActive] = useState(null)
-  const srcs = useMemo(() => c.gallery_photos.map((p) => p.image), [])
+  const srcs = useMemo(() => c.gallery_photos.map(itemSrc), [])
 
   return (
     <>
@@ -21,10 +24,12 @@ export default function Gallery() {
       <WaveDivider />
 
       <section className="section">
-        {/* Repeater (not data-cms-gallery) so the seeded photos render from
-            content.js and stay add/edit/removable in the CMS. */}
+        {/* Dynamic gallery — the office manages photos + albums from the CMS.
+            Seeded from content.js (gallery_photos) on first scan. This site
+            renders the grid with React (no CMS snippet), so the Lightbox stays
+            wired; data-cms-gallery is purely the scanner's discovery marker. */}
         <div
-          data-cms-repeater="Gallery - Photos"
+          data-cms-gallery="Gallery - Photos"
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4"
         >
           {c.gallery_photos.map((item, i) => (
@@ -38,8 +43,7 @@ export default function Gallery() {
               className="group cursor-zoom-in overflow-hidden rounded-xl bg-navy/5 focus:outline-none focus:ring-2 focus:ring-accent"
             >
               <img
-                src={item.image}
-                data-cms-field="image"
+                src={itemSrc(item)}
                 alt=""
                 loading="lazy"
                 className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"

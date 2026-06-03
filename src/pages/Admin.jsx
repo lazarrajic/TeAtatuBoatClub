@@ -75,7 +75,9 @@ export default function Admin() {
     <section className="section">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-extrabold text-navy">Upcoming bookings</h1>
-        <button onClick={() => load(password)} className="btn-outline px-4 py-2 text-sm">Refresh</button>
+        <button onClick={() => load(password)} disabled={busy} className="btn-outline px-4 py-2 text-sm disabled:opacity-60">
+          {busy ? 'Refreshing…' : 'Refresh'}
+        </button>
       </div>
       {error && <p className="mb-4 rounded-lg bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>}
       {bookings.length === 0 ? (

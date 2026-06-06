@@ -12,18 +12,18 @@ export default {
   ],
   "nav_cta": "Book a Work Bay",
   "home_hero_image": "/images/hero.jpg",
-  "home_hero_heading": "Te Atatū Boating",
+  "home_hero_heading": "Te Atatū Boating Club",
   "home_hero_sub": "A member-run boating club on the Waitematā since the 1960s — boat ramps, hardstand and work bays, plus a members bar, restaurant and function venue overlooking the harbour.",
   "home_hero_cta1": "Book a Work Bay",
   "home_hero_cta2": "Become a Member",
   "home_stats": [
     {
-      "value": "60+",
-      "label": "Years on the Water"
-    },
-    {
       "value": "750+",
       "label": "Member Families"
+    },
+    {
+      "value": "60+",
+      "label": "Years on the Water"
     },
     {
       "value": "7 Days",
@@ -642,16 +642,16 @@ export default {
   "pricing_other_heading": "Other Facility Fees",
   "pricing_other": [
     {
+      "item": "Hardstand (50ft+, member)",
+      "rate": "$26 / day (first 6 months)"
+    },
+    {
       "item": "Hardstand (under 40ft, member)",
       "rate": "$19 / day (first 6 months)"
     },
     {
       "item": "Hardstand (40–49ft, member)",
       "rate": "$21 / day (first 6 months)"
-    },
-    {
-      "item": "Hardstand (50ft+, member)",
-      "rate": "$26 / day (first 6 months)"
     },
     {
       "item": "Haulout (member)",

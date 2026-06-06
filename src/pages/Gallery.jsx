@@ -62,31 +62,37 @@ export default function Gallery() {
         )}
 
         {/* Dynamic gallery — the office manages photos + albums from the CMS.
-            Seeded from content.js (gallery_photos) on first scan. This site
-            renders the grid with React (no CMS snippet), so the Lightbox stays
-            wired; data-cms-gallery is purely the scanner's discovery marker. */}
+            Seeded from content.js (gallery_photos) on first scan. IMPORTANT: the
+            grid must map over `c.gallery_photos` directly — that's how the CMS
+            scanner detects which content.js array backs this gallery (so Publish
+            writes photo/album edits back here). Album filtering is done by
+            skipping non-matching photos, not by mapping a pre-filtered array. */}
         <div
           data-cms-gallery="Gallery - Photos"
           className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4"
         >
-          {visible.map((item, i) => (
-            <div
-              key={`${album}-${i}`}
-              role="button"
-              tabIndex={0}
-              aria-label="View photo"
-              onClick={() => setActive(i)}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(i) } }}
-              className="group cursor-zoom-in overflow-hidden rounded-xl bg-navy/5 focus:outline-none focus:ring-2 focus:ring-accent"
-            >
-              <img
-                src={itemSrc(item)}
-                alt=""
-                loading="lazy"
-                className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-            </div>
-          ))}
+          {c.gallery_photos.map((item, i) => {
+            if (album !== 'all' && itemAlbum(item) !== album) return null
+            const lightboxIdx = visible.indexOf(item)
+            return (
+              <div
+                key={i}
+                role="button"
+                tabIndex={0}
+                aria-label="View photo"
+                onClick={() => setActive(lightboxIdx)}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setActive(lightboxIdx) } }}
+                className="group cursor-zoom-in overflow-hidden rounded-xl bg-navy/5 focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <img
+                  src={itemSrc(item)}
+                  alt=""
+                  loading="lazy"
+                  className="aspect-square w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+            )
+          })}
         </div>
       </section>
 

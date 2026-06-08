@@ -12,18 +12,54 @@ export default {
   ],
   "nav_cta": "Book a Work Bay",
   "nav_links": [
-    { "to": "/", "label": "Home" },
-    { "to": "/about", "label": "About" },
-    { "to": "/facilities", "label": "Facilities" },
-    { "to": "/pricing", "label": "Pricing" },
-    { "to": "/booking", "label": "Booking" },
-    { "to": "/membership", "label": "Membership" },
-    { "to": "/restaurant", "label": "Restaurant" },
-    { "to": "/venue-hire", "label": "Venue" },
-    { "to": "/events", "label": "Events" },
-    { "to": "/gallery", "label": "Gallery" },
-    { "to": "/club-rules", "label": "Rules" },
-    { "to": "/contact", "label": "Contact" }
+    {
+      "to": "/",
+      "label": "Home"
+    },
+    {
+      "to": "/about",
+      "label": "About"
+    },
+    {
+      "to": "/facilities",
+      "label": "Facilities"
+    },
+    {
+      "to": "/pricing",
+      "label": "Pricing"
+    },
+    {
+      "to": "/booking",
+      "label": "Booking"
+    },
+    {
+      "to": "/membership",
+      "label": "Membership"
+    },
+    {
+      "to": "/restaurant",
+      "label": "Restaurant"
+    },
+    {
+      "to": "/venue-hire",
+      "label": "Venue"
+    },
+    {
+      "to": "/events",
+      "label": "Events"
+    },
+    {
+      "to": "/gallery",
+      "label": "Gallery"
+    },
+    {
+      "to": "/club-rules",
+      "label": "Rules"
+    },
+    {
+      "to": "/contact",
+      "label": "Contact"
+    }
   ],
   "home_hero_image": "/images/hero.jpg",
   "home_hero_heading": "Te Atatū Boating Club",

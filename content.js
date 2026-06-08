@@ -210,15 +210,15 @@ export default {
   "gallery_photos": [
     {
       "url": "/images/gallery/gallery-002.jpg",
-      "album": "test-1"
+      "album": "all"
     },
     {
       "url": "/images/gallery/gallery-003.jpg",
-      "album": "test-1"
+      "album": "all"
     },
     {
       "url": "/images/gallery/gallery-004.jpg",
-      "album": "test-1"
+      "album": "all"
     },
     {
       "url": "/images/gallery/gallery-005.jpg",

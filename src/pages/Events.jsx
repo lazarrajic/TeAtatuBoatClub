@@ -51,33 +51,40 @@ export default function Events() {
             </div>
           </AnimatedSection>
 
-          <div data-cms-repeater="Competitions - List" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {c.competitions.map((comp, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setOpenComp(i)}
-                className="card group flex flex-col overflow-hidden p-0 text-left transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent"
-              >
-                <div className="aspect-[16/10] w-full overflow-hidden bg-navy/5">
-                  <img
-                    src={comp.image}
-                    alt=""
-                    loading="lazy"
-                    data-cms-field="image"
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-                <div className="flex flex-1 flex-col p-5">
-                  <h3 className="font-display text-lg font-semibold text-navy" data-cms-field="title">{comp.title}</h3>
-                  <span className="mt-auto pt-3 text-sm font-semibold text-accent">View rules &amp; details →</span>
-                  {/* Hidden fields so the CMS maps them — shown in the modal, not the card. */}
-                  <span className="hidden" data-cms-field="details">{comp.details}</span>
-                  <span className="hidden" data-cms-field="rules_url">{comp.rules_url}</span>
-                </div>
-              </button>
-            ))}
-          </div>
+          {c.competitions.length > 0 ? (
+            <div data-cms-repeater="Competitions - List" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {c.competitions.map((comp, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setOpenComp(i)}
+                  className="card group flex flex-col overflow-hidden p-0 text-left transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent"
+                >
+                  <div className="aspect-[16/10] w-full overflow-hidden bg-navy/5">
+                    <img
+                      src={comp.image}
+                      alt=""
+                      loading="lazy"
+                      data-cms-field="image"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </div>
+                  <div className="flex flex-1 flex-col p-5">
+                    <h3 className="font-display text-lg font-semibold text-navy" data-cms-field="title">{comp.title}</h3>
+                    <span className="mt-auto pt-3 text-sm font-semibold text-accent">View rules &amp; details →</span>
+                    {/* Hidden fields so the CMS maps them — shown in the modal, not the card. */}
+                    <span className="hidden" data-cms-field="details">{comp.details}</span>
+                    <span className="hidden" data-cms-field="rules_url">{comp.rules_url}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="mx-auto max-w-md rounded-2xl border border-navy/10 bg-white/60 px-6 py-10 text-center">
+              <p className="font-display text-lg font-semibold text-navy">No competitions running right now</p>
+              <p className="mt-1.5 text-sm text-navy/60">Check back soon — new competitions are posted here through the season.</p>
+            </div>
+          )}
         </div>
       </section>
 

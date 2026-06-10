@@ -1028,8 +1028,8 @@ export default {
   "competitions_sub": "Fishing competitions and club contests through the season. Tap a competition for full rules and details.",
   "competitions": [
     {
-      "image": "https://images.unsplash.com/photo-1545566239-0ada55f3df9b?auto=format&fit=crop&w=900&q=70",
-      "title": "Summer Fishing Competition",
+      "image": "https://ckzojvudzugbdmdwlukw.supabase.co/storage/v1/object/public/cms-assets/514ae72b-9328-4189-9617-ab0f62ddefbc/assets/1781060855003-1vtwne.png",
+      "title": "Commodore's Snapper Classic",
       "details": "Our flagship summer competition open to all members. Weigh-in at the club. Prizes across multiple categories — snapper, kingfish and junior anglers. Full rules, entry fees and weigh-in times are in the rules document.",
       "rules_url": ""
     },

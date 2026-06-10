@@ -29,11 +29,20 @@ export default function ConfirmScreen({ member, selections, fallback, onBack, on
   const cancelNotice = content['Booking - Notice - Cancellation']
   const officeEmail = content['Contact - Office - Email']
 
-  const count = selections.length
-  // Compute an estimated total from the rate string (e.g. "$25" → 25).
+  const largeVessel = !!member.largeVessel
+  // Group the flat slot list by date so large vessels (2 bays/day) read clearly.
+  const byDay = selections.reduce((acc, s) => {
+    ;(acc[s.slotDate] ||= []).push(s.berthName)
+    return acc
+  }, {})
+  const days = Object.keys(byDay).sort()
+  const dayCount = days.length
+  // Pricing is per DAY at the member rate. Large-vessel cost treatment (one rate
+  // vs two bays) is still being decided by the committee, so we estimate on days
+  // and flag that the office confirms the final hire. TODO: revisit once decided.
   const rateNum = parseFloat(String(rate).replace(/[^0-9.]/g, ''))
   const currency = (String(rate).match(/^[^\d]*/) || [''])[0] || ''
-  const total = Number.isFinite(rateNum) ? `${currency}${(rateNum * count).toFixed(0)}` : null
+  const total = Number.isFinite(rateNum) ? `${currency}${(rateNum * dayCount).toFixed(0)}` : null
 
   const [ack, setAck] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -69,15 +78,21 @@ export default function ConfirmScreen({ member, selections, fallback, onBack, on
 
       <h2 className="text-xl font-semibold text-navy">Confirm your booking</h2>
       <p className="mt-1 text-sm text-navy/60">
-        {count} day{count !== 1 ? 's' : ''} for {member.fullName}.
+        {dayCount} day{dayCount !== 1 ? 's' : ''} for {member.fullName}.
       </p>
 
-      {/* Selected days */}
+      {largeVessel && (
+        <p className="mt-3 rounded-lg bg-accent/10 px-4 py-2.5 text-sm text-accent-dark">
+          Large vessel (10m+) — each day reserves <strong>2 work bays</strong> together.
+        </p>
+      )}
+
+      {/* Selected days (grouped — large vessels list both bays under one day) */}
       <ul className="mt-5 max-h-56 divide-y divide-navy/5 overflow-y-auto rounded-xl bg-sand p-2 text-sm">
-        {selections.map((s, i) => (
-          <li key={i} className="flex items-center justify-between px-2 py-2">
-            <span className="font-semibold text-navy">{s.berthName}</span>
-            <span className="text-navy/70">{formatDate(s.slotDate)}</span>
+        {days.map((iso) => (
+          <li key={iso} className="flex items-center justify-between px-2 py-2">
+            <span className="font-semibold text-navy">{formatDate(iso)}</span>
+            <span className="text-right text-navy/70">{byDay[iso].join(' + ')}</span>
           </li>
         ))}
       </ul>
@@ -85,14 +100,18 @@ export default function ConfirmScreen({ member, selections, fallback, onBack, on
       {/* Price */}
       <dl className="mt-4 space-y-1.5 rounded-xl border border-navy/10 p-4 text-sm">
         <div className="flex justify-between"><dt className="text-navy/60">Member rate</dt><dd className="font-semibold">{rate} {unit}</dd></div>
-        <div className="flex justify-between"><dt className="text-navy/60">Days</dt><dd className="font-semibold">× {count}</dd></div>
+        <div className="flex justify-between"><dt className="text-navy/60">Days</dt><dd className="font-semibold">× {dayCount}</dd></div>
         {total && (
           <div className="flex justify-between border-t border-navy/10 pt-1.5 text-base">
             <dt className="font-semibold text-navy">Estimated total</dt>
             <dd className="font-bold text-accent-dark">{total}</dd>
           </div>
         )}
-        <p className="pt-1 text-xs text-navy/45">Invoiced by the club office — no payment is taken online.</p>
+        <p className="pt-1 text-xs text-navy/45">
+          {largeVessel
+            ? 'Estimate shown per day. Large-vessel hire (2 bays) is confirmed and invoiced by the club office.'
+            : 'Invoiced by the club office — no payment is taken online.'}
+        </p>
       </dl>
 
       <div className="mt-5 space-y-3 text-sm text-navy/70">
@@ -120,7 +139,7 @@ export default function ConfirmScreen({ member, selections, fallback, onBack, on
         disabled={!ack || busy}
         className="btn-primary mt-5 w-full disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {busy ? 'Confirming…' : `Confirm ${count} booking${count !== 1 ? 's' : ''}`}
+        {busy ? 'Confirming…' : `Confirm ${dayCount} day${dayCount !== 1 ? 's' : ''}`}
       </button>
     </div>
   )

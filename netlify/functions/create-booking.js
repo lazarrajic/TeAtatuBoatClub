@@ -14,7 +14,10 @@ import { Resend } from 'resend'
 import { json, parseBody, supabase, findActiveMember, isWithinWindow } from './_supabase.js'
 
 const VALID_BERTHS = new Set([1, 2, 3, 4])
-const MAX_SLOTS = 14
+// Up to 14 days in the booking window; a large vessel (≥10m) books 2 bays per
+// day, so allow up to 28 bay-slots in one batch (the date-window check is the
+// real limit on how far ahead you can book).
+const MAX_SLOTS = 28
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' })
@@ -37,7 +40,7 @@ export const handler = async (event) => {
       return json(400, { ok: false, error: 'Please choose at least one day.' })
     }
     if (slots.length > MAX_SLOTS) {
-      return json(400, { ok: false, error: `You can book up to ${MAX_SLOTS} days at once.` })
+      return json(400, { ok: false, error: 'You can book up to 14 days at once.' })
     }
 
     // Validate + normalise each slot, de-duplicating identical ones.

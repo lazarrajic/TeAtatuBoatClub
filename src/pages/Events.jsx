@@ -1,8 +1,13 @@
+import { useState } from 'react'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 
 export default function Events() {
+  // Which competition's details modal is open (index into c.competitions), or null.
+  const [openComp, setOpenComp] = useState(null)
+  const comp = openComp != null ? c.competitions[openComp] : null
+
   return (
     <>
       <section className="bg-navy py-20 text-center text-white">
@@ -34,8 +39,50 @@ export default function Events() {
         </div>
       </section>
 
-      {/* Facebook note */}
+      {/* Competitions (repeater) — clickable cards open a details modal with rules. */}
       <section className="bg-sand">
+        <div className="section">
+          <AnimatedSection>
+            <div className="mx-auto mb-10 max-w-2xl text-center">
+              <h2 className="font-display text-3xl font-semibold text-navy" data-cms="Competitions - Heading">
+                {c.competitions_heading}
+              </h2>
+              <p className="mt-3 text-navy/70" data-cms="Competitions - Sub">{c.competitions_sub}</p>
+            </div>
+          </AnimatedSection>
+
+          <div data-cms-repeater="Competitions - List" className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {c.competitions.map((comp, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setOpenComp(i)}
+                className="card group flex flex-col overflow-hidden p-0 text-left transition hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent"
+              >
+                <div className="aspect-[16/10] w-full overflow-hidden bg-navy/5">
+                  <img
+                    src={comp.image}
+                    alt=""
+                    loading="lazy"
+                    data-cms-field="image"
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <div className="flex flex-1 flex-col p-5">
+                  <h3 className="font-display text-lg font-semibold text-navy" data-cms-field="title">{comp.title}</h3>
+                  <span className="mt-auto pt-3 text-sm font-semibold text-accent">View rules &amp; details →</span>
+                  {/* Hidden fields so the CMS maps them — shown in the modal, not the card. */}
+                  <span className="hidden" data-cms-field="details">{comp.details}</span>
+                  <span className="hidden" data-cms-field="rules_url">{comp.rules_url}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Facebook note */}
+      <section>
         <div className="section text-center">
           <AnimatedSection>
             <p className="text-lg font-semibold text-navy" data-cms="Events - Facebook - Note">{c.events_facebook_note}</p>
@@ -45,6 +92,53 @@ export default function Events() {
           </AnimatedSection>
         </div>
       </section>
+
+      {/* Competition details modal */}
+      {comp && (
+        <div
+          className="fixed inset-0 z-50 flex items-end justify-center bg-navy/60 p-0 backdrop-blur-sm sm:items-center sm:p-5"
+          onClick={() => setOpenComp(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div
+            className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setOpenComp(null)}
+              aria-label="Close"
+              className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-navy shadow ring-1 ring-navy/10 transition hover:bg-white"
+            >
+              ✕
+            </button>
+            {comp.image && (
+              <div className="aspect-[16/9] w-full overflow-hidden bg-navy/5">
+                <img src={comp.image} alt="" className="h-full w-full object-cover" />
+              </div>
+            )}
+            <div className="p-6 sm:p-7">
+              <h3 className="font-display text-2xl font-semibold text-navy">{comp.title}</h3>
+              <p className="mt-3 whitespace-pre-line text-navy/75">{comp.details}</p>
+              {comp.rules_url ? (
+                <a
+                  href={comp.rules_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-primary mt-6 inline-flex items-center gap-2"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M4 6h16M4 6a2 2 0 012-2h12a2 2 0 012 2M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6" />
+                  </svg>
+                  Download rules (PDF)
+                </a>
+              ) : (
+                <p className="mt-6 text-sm italic text-navy/45">Full rules will be available here soon.</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

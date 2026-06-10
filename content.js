@@ -988,6 +988,22 @@ export default {
     }
   ],
   "events_facebook_note": "For up-to-date news and events, follow us on Facebook.",
+  "competitions_heading": "Competitions",
+  "competitions_sub": "Fishing competitions and club contests through the season. Tap a competition for full rules and details.",
+  "competitions": [
+    {
+      "image": "https://images.unsplash.com/photo-1545566239-0ada55f3df9b?auto=format&fit=crop&w=900&q=70",
+      "title": "Summer Fishing Competition",
+      "details": "Our flagship summer competition open to all members. Weigh-in at the club. Prizes across multiple categories — snapper, kingfish and junior anglers. Full rules, entry fees and weigh-in times are in the rules document.",
+      "rules_url": ""
+    },
+    {
+      "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=900&q=70",
+      "title": "Club Championship",
+      "details": "Season-long points series across our scheduled competition days. The angler with the highest combined points takes the club championship trophy. See the rules document for the points system and qualifying events.",
+      "rules_url": ""
+    }
+  ],
   "rules_hero_heading": "Club Rules",
   "rules_hero_sub": "A few rules keep the club, the yard and the bar running smoothly for everyone.",
   "rules_intro_body": "These are a summary of the club’s key rules. Full rules are available from the office and are presented at your New Members’ night.",

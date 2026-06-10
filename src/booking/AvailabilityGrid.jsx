@@ -46,8 +46,26 @@ export default function AvailabilityGrid({ member, onSelect }) {
   }
 
   const { days, berths, taken } = state
-  const selectedList = Object.values(selected).sort((a, b) => a.slotDate.localeCompare(b.slotDate))
-  const count = selectedList.length
+
+  // Large vessels (≥10m) occupy the first two bays together (bays 1 & 2, by id).
+  // For them we select whole DAYS and book both bays; everyone else books per-bay.
+  const largeVessel = !!member.largeVessel
+  const orderedBerths = [...berths].sort((a, b) => a.id - b.id)
+  const [bay1, bay2] = orderedBerths
+  const dayTaken = (iso) =>
+    !!taken[`${bay1?.id}|${iso}|${PERIOD}`] || !!taken[`${bay2?.id}|${iso}|${PERIOD}`]
+
+  // Flatten the current selection into the slot list the API expects. For large
+  // vessels each selected day yields two slots (bay 1 + bay 2).
+  const selectedList = largeVessel
+    ? Object.values(selected)
+        .sort((a, b) => a.slotDate.localeCompare(b.slotDate))
+        .flatMap((s) => [
+          { berthId: bay1.id, berthName: bay1.name, slotDate: s.slotDate, period: PERIOD },
+          { berthId: bay2.id, berthName: bay2.name, slotDate: s.slotDate, period: PERIOD },
+        ])
+    : Object.values(selected).sort((a, b) => a.slotDate.localeCompare(b.slotDate))
+  const dayCount = largeVessel ? Object.keys(selected).length : selectedList.length
 
   const toggle = (berth, iso) => {
     const key = `${berth.id}|${iso}`
@@ -58,6 +76,85 @@ export default function AvailabilityGrid({ member, onSelect }) {
       return next
     })
   }
+
+  const toggleDay = (iso) => {
+    setSelected((prev) => {
+      const next = { ...prev }
+      if (next[iso]) delete next[iso]
+      else next[iso] = { slotDate: iso }
+      return next
+    })
+  }
+
+  // ── Large-vessel view: pick whole days; each books bays 1 & 2 together ──
+  if (largeVessel) {
+    return (
+      <div>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="text-sm text-navy/70">
+            Signed in as <strong>{member.fullName}</strong>. Your vessel (10m+) uses{' '}
+            <strong>{bay1?.name} &amp; {bay2?.name}</strong> together — tap the days you need.
+          </p>
+          <div className="flex items-center gap-4 text-xs text-navy/60">
+            <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded bg-accent/20 ring-1 ring-accent/40" /> Available</span>
+            <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded bg-gold ring-1 ring-gold-dark" /> Selected</span>
+            <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded bg-navy/10" /> Unavailable</span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 md:grid-cols-7">
+          {days.map((iso) => {
+            const f = formatDay(iso)
+            const isTaken = dayTaken(iso)
+            const isSelected = !!selected[iso]
+            return (
+              <button
+                key={iso}
+                onClick={() => !isTaken && toggleDay(iso)}
+                disabled={isTaken}
+                aria-pressed={isSelected}
+                className={
+                  isTaken
+                    ? 'cursor-not-allowed rounded-xl bg-navy/5 px-2 py-3 text-center text-navy/35'
+                    : isSelected
+                      ? 'rounded-xl bg-gold px-2 py-3 text-center font-bold text-navy ring-1 ring-inset ring-gold-dark transition'
+                      : 'rounded-xl bg-accent/15 px-2 py-3 text-center font-semibold text-accent-dark ring-1 ring-inset ring-accent/30 transition hover:bg-accent hover:text-white'
+                }
+              >
+                <div className="text-[11px] uppercase opacity-80">{f.weekday}</div>
+                <div className="text-sm">{f.day}</div>
+                <div className="mt-1 text-[10px] font-medium">{isTaken ? 'Unavailable' : isSelected ? '✓ Selected' : 'Both bays'}</div>
+              </button>
+            )
+          })}
+        </div>
+
+        <div className="sticky bottom-4 z-20 mt-5">
+          <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-navy/10 bg-white/95 px-5 py-4 shadow-lg backdrop-blur">
+            <p className="text-sm text-navy/70">
+              {dayCount === 0 ? (
+                'No days selected yet.'
+              ) : (
+                <>
+                  <strong className="text-navy">{dayCount}</strong> day{dayCount !== 1 ? 's' : ''} selected
+                  <span className="ml-2 text-navy/45">{bay1?.name} &amp; {bay2?.name} each day</span>
+                </>
+              )}
+            </p>
+            <button
+              onClick={() => onSelect(selectedList)}
+              disabled={dayCount === 0}
+              className="btn-primary px-6 py-2.5 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Continue{dayCount > 0 ? ` (${dayCount})` : ''}
+            </button>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const count = selectedList.length
 
   return (
     <div>

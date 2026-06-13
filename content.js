@@ -63,7 +63,7 @@ export default {
   ],
   "home_hero_image": "/images/hero.jpg",
   "home_hero_heading": "Te Atatū Boating Club",
-  "home_hero_sub": "A member-run boating club on the Waitematā since the 1960s — boat ramps, hardstand and work bays, plus a members bar, restaurant and function venue overlooking the harbour.",
+  "home_hero_sub": "A member-run boating club on the Waitematā since the 1960s - boat ramps, hardstand and work bays, plus a members bar, restaurant and function venue overlooking the harbour.",
   "home_hero_cta1": "Book a Work Bay",
   "home_hero_cta2": "Become a Member",
   "home_stats": [

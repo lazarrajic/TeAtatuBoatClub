@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# Push guard — blocks direct (non-merge) pushes to main.
+# Why: the CMS publishes to main and Netlify deploys main, so main must always
+# be shippable. Do code work on a branch and merge it (see CLAUDE.md).
+# Deliberate exception? `git push --no-verify`.
+while read -r _local_ref local_sha remote_ref _remote_sha; do
+  [ "$remote_ref" = "refs/heads/main" ] || continue
+  # branch deletion — nothing to check
+  case "$local_sha" in *[!0]*) ;; *) continue ;; esac
+  # merge commits have >1 parent → "sha parent parent" = 3+ words
+  words=$(git rev-list --no-walk --parents -n 1 "$local_sha" 2>/dev/null | wc -w)
+  if [ "$words" -lt 3 ]; then
+    echo "✋ Direct push to main blocked — code work belongs on a branch (see CLAUDE.md)."
+    echo "   Merge your branch instead, or 'git push --no-verify' if this is deliberate."
+    exit 1
+  fi
+done
+exit 0

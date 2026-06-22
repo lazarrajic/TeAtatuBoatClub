@@ -1009,6 +1009,10 @@ export default {
   "events_newsletter_heading": "Club Newsletter",
   "events_newsletter_body": "Catch up on club news, results and what’s coming up — download the latest newsletter.",
   "events_newsletter_document": "",
+  "newsletter_signup_heading": "Stay in the loop",
+  "newsletter_signup_sub": "Get club news, events and results straight to your inbox.",
+  "newsletter_signup_button": "Subscribe",
+  "newsletter_signup_success": "You’re in — thanks for subscribing!",
   "events": [
     {
       "date": "Weekly",

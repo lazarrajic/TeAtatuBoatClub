@@ -2,6 +2,7 @@ import { useState } from 'react'
 import c from '../../content.js'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
+import NewsletterSignup from '../components/NewsletterSignup.jsx'
 
 export default function Events() {
   // Which competition's details modal is open (index into c.competitions), or null.
@@ -118,6 +119,9 @@ export default function Events() {
           )}
         </div>
       </section>
+
+      {/* Newsletter signup — posts subscribers to the Pubd CMS */}
+      <NewsletterSignup />
 
       {/* Facebook note */}
       <section>

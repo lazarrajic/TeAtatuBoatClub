@@ -49,23 +49,33 @@ export default function AvailabilityGrid({ member, onSelect }) {
 
   const { days, berths, taken } = state
 
-  // Large vessels (≥10m) occupy the first two bays together (bays 1 & 2, by id).
-  // For them we select whole DAYS and book both bays; everyone else books per-bay.
+  // Large vessels (≥10m) need an adjacent PAIR of bays for the day — either
+  // 1 & 2 or 3 & 4. A day is available if at least one full pair is free; we
+  // assign the first free pair (prefer 1 & 2). For them we select whole DAYS;
+  // everyone else books per-bay.
   const largeVessel = !!member.largeVessel
   const orderedBerths = [...berths].sort((a, b) => a.id - b.id)
-  const [bay1, bay2] = orderedBerths
-  const dayTaken = (iso) =>
-    !!taken[`${bay1?.id}|${iso}|${PERIOD}`] || !!taken[`${bay2?.id}|${iso}|${PERIOD}`]
+  const [bay1, bay2, bay3, bay4] = orderedBerths
+  const bayFree = (bay, iso) => !!bay && !taken[`${bay.id}|${iso}|${PERIOD}`]
+  // The free pair assigned to a large vessel for this day, or null if none.
+  const pairForDay = (iso) => {
+    if (bayFree(bay1, iso) && bayFree(bay2, iso)) return [bay1, bay2]
+    if (bayFree(bay3, iso) && bayFree(bay4, iso)) return [bay3, bay4]
+    return null
+  }
+  const dayTaken = (iso) => pairForDay(iso) === null
 
   // Flatten the current selection into the slot list the API expects. For large
-  // vessels each selected day yields two slots (bay 1 + bay 2).
+  // vessels each selected day yields two slots — the assigned free pair.
   const selectedList = largeVessel
     ? Object.values(selected)
         .sort((a, b) => a.slotDate.localeCompare(b.slotDate))
-        .flatMap((s) => [
-          { berthId: bay1.id, berthName: bay1.name, slotDate: s.slotDate, period: PERIOD },
-          { berthId: bay2.id, berthName: bay2.name, slotDate: s.slotDate, period: PERIOD },
-        ])
+        .flatMap((s) => {
+          const pair = pairForDay(s.slotDate)
+          return pair
+            ? pair.map((bay) => ({ berthId: bay.id, berthName: bay.name, slotDate: s.slotDate, period: PERIOD }))
+            : []
+        })
     : Object.values(selected).sort((a, b) => a.slotDate.localeCompare(b.slotDate))
   const dayCount = largeVessel ? Object.keys(selected).length : selectedList.length
 
@@ -102,7 +112,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-navy/70">
             Signed in as <strong>{member.fullName}</strong>. Your vessel (10m+) uses{' '}
-            <strong>{bay1?.name} &amp; {bay2?.name}</strong> together — tap the days you need (up to {MAX_DAYS}).
+            <strong>a pair of bays</strong> (1 &amp; 2, or 3 &amp; 4) together — tap the days you need (up to {MAX_DAYS}).
           </p>
           <div className="flex items-center gap-4 text-xs text-navy/60">
             <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded bg-accent/20 ring-1 ring-accent/40" /> Available</span>
@@ -116,6 +126,8 @@ export default function AvailabilityGrid({ member, onSelect }) {
             const f = formatDay(iso)
             const isTaken = dayTaken(iso)
             const isSelected = !!selected[iso]
+            const pair = isTaken ? null : pairForDay(iso)
+            const pairLabel = pair ? `Bays ${pair[0].id} & ${pair[1].id}` : ''
             return (
               <button
                 key={iso}
@@ -132,7 +144,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
               >
                 <div className="text-[11px] uppercase opacity-80">{f.weekday}</div>
                 <div className="text-sm">{f.day}</div>
-                <div className="mt-1 text-[10px] font-medium">{isTaken ? 'Unavailable' : isSelected ? '✓ Selected' : 'Both bays'}</div>
+                <div className="mt-1 text-[10px] font-medium">{isTaken ? 'Unavailable' : isSelected ? '✓ Selected' : pairLabel}</div>
               </button>
             )
           })}
@@ -147,7 +159,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
               ) : (
                 <>
                   <strong className="text-navy">{dayCount}</strong> day{dayCount !== 1 ? 's' : ''} selected
-                  <span className="ml-2 text-navy/45">{bay1?.name} &amp; {bay2?.name} each day</span>
+                  <span className="ml-2 text-navy/45">a pair of bays each day</span>
                 </>
               )}
             </p>

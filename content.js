@@ -1034,19 +1034,19 @@ export default {
       "image": "https://ckzojvudzugbdmdwlukw.supabase.co/storage/v1/object/public/cms-assets/514ae72b-9328-4189-9617-ab0f62ddefbc/assets/1781060855003-1vtwne.png",
       "title": "Commodore's Snapper Classic",
       "details": "Our flagship summer competition open to all members. Weigh-in at the club. Prizes across multiple categories — snapper, kingfish and junior anglers. Full rules, entry fees and weigh-in times are in the rules document.",
-      "rules_url": ""
+      "rules_document": ""
     },
     {
       "image": "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=900&q=70",
       "title": "Club Championship",
       "details": "Season-long points series across our scheduled competition days. The angler with the highest combined points takes the club championship trophy. See the rules document for the points system and qualifying events.",
-      "rules_url": ""
+      "rules_document": ""
     },
     {
       "image": "",
       "title": "NEW EVENT ",
       "details": "DETAILS",
-      "rules_url": ""
+      "rules_document": ""
     }
   ],
   "rules_hero_heading": "Club Rules",

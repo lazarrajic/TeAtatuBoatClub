@@ -105,7 +105,7 @@ export default function Events() {
                     <span className="mt-auto pt-3 text-sm font-semibold text-accent">View rules &amp; details →</span>
                     {/* Hidden fields so the CMS maps them — shown in the modal, not the card. */}
                     <span className="hidden" data-cms-field="details">{comp.details}</span>
-                    <span className="hidden" data-cms-field="rules_url">{comp.rules_url}</span>
+                    <span className="hidden" data-cms-field="rules_document">{comp.rules_document}</span>
                   </div>
                 </button>
               ))}
@@ -158,9 +158,9 @@ export default function Events() {
             <div className="p-6 sm:p-7">
               <h3 className="font-display text-2xl font-semibold text-navy">{comp.title}</h3>
               <p className="mt-3 whitespace-pre-line text-navy/75">{comp.details}</p>
-              {comp.rules_url ? (
+              {comp.rules_document ? (
                 <a
-                  href={comp.rules_url}
+                  href={comp.rules_document}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-primary mt-6 inline-flex items-center gap-2"

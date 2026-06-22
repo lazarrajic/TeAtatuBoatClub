@@ -14,10 +14,12 @@ import { Resend } from 'resend'
 import { json, parseBody, supabase, findActiveMember, isWithinWindow } from './_supabase.js'
 
 const VALID_BERTHS = new Set([1, 2, 3, 4])
-// Up to 14 days in the booking window; a large vessel (≥10m) books 2 bays per
-// day, so allow up to 28 bay-slots in one batch (the date-window check is the
-// real limit on how far ahead you can book).
-const MAX_SLOTS = 28
+// The 14-day window controls how far AHEAD you can book; MAX_DAYS caps how many
+// distinct days a member can hold in a single booking. A large vessel (≥10m)
+// books 2 bays per day, so 5 days = up to 10 bay-slots; a regular member could
+// pick up to 4 bays × 5 days = 20. MAX_SLOTS is just a defensive upper bound.
+const MAX_DAYS = 5
+const MAX_SLOTS = 20
 
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') return json(405, { ok: false, error: 'Method not allowed' })
@@ -40,7 +42,7 @@ export const handler = async (event) => {
       return json(400, { ok: false, error: 'Please choose at least one day.' })
     }
     if (slots.length > MAX_SLOTS) {
-      return json(400, { ok: false, error: 'You can book up to 14 days at once.' })
+      return json(400, { ok: false, error: `You can book up to ${MAX_DAYS} days at once.` })
     }
 
     // Validate + normalise each slot, de-duplicating identical ones.
@@ -60,6 +62,12 @@ export const handler = async (event) => {
       if (seen.has(key)) continue
       seen.add(key)
       norm.push({ berthId, slotDate, slotPeriod })
+    }
+
+    // ── Cap distinct days per booking (the window controls how far ahead) ──
+    const distinctDays = new Set(norm.map((s) => s.slotDate)).size
+    if (distinctDays > MAX_DAYS) {
+      return json(400, { ok: false, error: `You can book up to ${MAX_DAYS} days at once.` })
     }
 
     // ── Re-validate the member server-side ──

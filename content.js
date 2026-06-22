@@ -1006,6 +1006,9 @@ export default {
   "events_hero_heading": "What’s On",
   "events_hero_sub": "Live music, raffles and club events through the year.",
   "events_intro_body": "There’s always something happening at the club — from meat raffles to live music and seasonal events. For the most up-to-date listings, follow us on Facebook.",
+  "events_newsletter_heading": "Club Newsletter",
+  "events_newsletter_body": "Catch up on club news, results and what’s coming up — download the latest newsletter.",
+  "events_newsletter_document": "",
   "events": [
     {
       "date": "Weekly",

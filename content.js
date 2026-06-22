@@ -1038,6 +1038,12 @@ export default {
       "title": "Club Championship",
       "details": "Season-long points series across our scheduled competition days. The angler with the highest combined points takes the club championship trophy. See the rules document for the points system and qualifying events.",
       "rules_url": ""
+    },
+    {
+      "image": "",
+      "title": "NEW EVENT ",
+      "details": "DETAILS",
+      "rules_url": ""
     }
   ],
   "rules_hero_heading": "Club Rules",

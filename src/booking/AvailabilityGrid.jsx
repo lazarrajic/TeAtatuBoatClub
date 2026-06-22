@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { getAvailability } from './api.js'
 
 const PERIOD = 'day' // current slot granularity (see schema.sql / Part C #1)
+const MAX_DAYS = 5   // a member can hold up to 5 distinct days in one booking
 
 function formatDay(iso) {
   const d = new Date(`${iso}T00:00:00`)
@@ -16,6 +17,7 @@ function formatDay(iso) {
 export default function AvailabilityGrid({ member, onSelect }) {
   const [state, setState] = useState({ status: 'loading' })
   const [selected, setSelected] = useState({}) // key `${berthId}|${iso}` -> selection object
+  const [limitHit, setLimitHit] = useState(false) // true when a 6th day was blocked
 
   useEffect(() => {
     let active = true
@@ -69,6 +71,11 @@ export default function AvailabilityGrid({ member, onSelect }) {
 
   const toggle = (berth, iso) => {
     const key = `${berth.id}|${iso}`
+    if (!selected[key]) {
+      const dates = new Set(Object.values(selected).map((s) => s.slotDate))
+      if (!dates.has(iso) && dates.size >= MAX_DAYS) { setLimitHit(true); return }
+    }
+    setLimitHit(false)
     setSelected((prev) => {
       const next = { ...prev }
       if (next[key]) delete next[key]
@@ -78,6 +85,8 @@ export default function AvailabilityGrid({ member, onSelect }) {
   }
 
   const toggleDay = (iso) => {
+    if (!selected[iso] && Object.keys(selected).length >= MAX_DAYS) { setLimitHit(true); return }
+    setLimitHit(false)
     setSelected((prev) => {
       const next = { ...prev }
       if (next[iso]) delete next[iso]
@@ -93,7 +102,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
           <p className="text-sm text-navy/70">
             Signed in as <strong>{member.fullName}</strong>. Your vessel (10m+) uses{' '}
-            <strong>{bay1?.name} &amp; {bay2?.name}</strong> together — tap the days you need.
+            <strong>{bay1?.name} &amp; {bay2?.name}</strong> together — tap the days you need (up to {MAX_DAYS}).
           </p>
           <div className="flex items-center gap-4 text-xs text-navy/60">
             <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded bg-accent/20 ring-1 ring-accent/40" /> Available</span>
@@ -131,6 +140,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
 
         <div className="sticky bottom-4 z-20 mt-5">
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-navy/10 bg-white/95 px-5 py-4 shadow-lg backdrop-blur">
+            {limitHit && <p className="w-full text-xs font-semibold text-gold-dark">That’s the {MAX_DAYS}-day limit — deselect a day to choose another.</p>}
             <p className="text-sm text-navy/70">
               {dayCount === 0 ? (
                 'No days selected yet.'
@@ -160,7 +170,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
     <div>
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <p className="text-sm text-navy/70">
-          Signed in as <strong>{member.fullName}</strong>. Tap any free days to select — book one or several.
+          Signed in as <strong>{member.fullName}</strong>. Tap any free days to select — up to {MAX_DAYS} days per booking.
         </p>
         <div className="flex items-center gap-4 text-xs text-navy/60">
           <span className="flex items-center gap-1.5"><span className="h-3 w-3 rounded bg-accent/20 ring-1 ring-accent/40" /> Available</span>
@@ -223,6 +233,7 @@ export default function AvailabilityGrid({ member, onSelect }) {
       {/* Selection bar */}
       <div className="sticky bottom-4 z-20 mt-5">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-navy/10 bg-white/95 px-5 py-4 shadow-lg backdrop-blur">
+          {limitHit && <p className="w-full text-xs font-semibold text-gold-dark">That’s the {MAX_DAYS}-day limit — deselect a day to choose another.</p>}
           <p className="text-sm text-navy/70">
             {count === 0 ? (
               'No days selected yet.'

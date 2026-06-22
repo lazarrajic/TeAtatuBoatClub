@@ -26,6 +26,37 @@ export default function Events() {
         </AnimatedSection>
       </section>
 
+      {/* Club newsletter — admin uploads the PDF in the CMS (Events ▸ Newsletter Document).
+          The field is declared once on the hidden anchor below; the visible block just
+          reads the value, so there's no duplicate data-cms key. */}
+      <section className="section pt-0">
+        <AnimatedSection>
+          <div className="mx-auto max-w-xl rounded-3xl border border-navy/10 bg-sand px-6 py-8 text-center">
+            <h2 className="font-display text-2xl font-semibold text-navy" data-cms="Events - Newsletter - Heading">
+              {c.events_newsletter_heading}
+            </h2>
+            <p className="mt-2 text-navy/70" data-cms="Events - Newsletter - Body">{c.events_newsletter_body}</p>
+            {/* CMS-mapped file field (PDF upload happens here) — hidden on the live site. */}
+            <a hidden href={c.events_newsletter_document} data-cms="Events - Newsletter - Document">newsletter</a>
+            {c.events_newsletter_document ? (
+              <a
+                href={c.events_newsletter_document}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn-primary mt-6 inline-flex items-center gap-2"
+              >
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3M4 6h16M4 6a2 2 0 012-2h12a2 2 0 012 2M4 6v12a2 2 0 002 2h12a2 2 0 002-2V6" />
+                </svg>
+                Download newsletter (PDF)
+              </a>
+            ) : (
+              <p className="mt-6 text-sm italic text-navy/45">The latest newsletter will be available here soon.</p>
+            )}
+          </div>
+        </AnimatedSection>
+      </section>
+
       {/* Events (repeater) */}
       <section className="section pt-0">
         <div data-cms-repeater="Events - List" className="grid gap-6 md:grid-cols-3">

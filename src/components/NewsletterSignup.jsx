@@ -3,7 +3,7 @@ import c from '../../content.js'
 
 // Posts new subscribers to the Pubd CMS (which owns the list + sending).
 // The client id scopes the subscription to this club; it's not a secret.
-const CMS_URL = 'https://cms.sitemog.co.nz'
+const CMS_URL = 'https://cms.pubd.io'
 const CLIENT_ID = '514ae72b-9328-4189-9617-ab0f62ddefbc'
 
 export default function NewsletterSignup() {

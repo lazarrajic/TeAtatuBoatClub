@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 
@@ -8,6 +9,9 @@ import WaveDivider from '../components/WaveDivider.jsx'
 export default function Pricing() {
   return (
     <>
+      <Seo title={c.pricing_seo_title} description={c.pricing_seo_description} />
+      <span hidden data-cms="Pricing - SEO - Page Title">{c.pricing_seo_title}</span>
+      <span hidden data-cms="Pricing - SEO - Meta Description">{c.pricing_seo_description}</span>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
           <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Pricing - Hero - Heading">

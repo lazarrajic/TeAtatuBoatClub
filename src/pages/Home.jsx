@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 
 export default function Home() {
   return (
     <>
+      <Seo title={c.home_seo_title} description={c.home_seo_description} />
+      <span hidden data-cms="Home - SEO - Page Title">{c.home_seo_title}</span>
+      <span hidden data-cms="Home - SEO - Meta Description">{c.home_seo_description}</span>
       {/* ─── Hero ─── */}
       <section className="relative isolate flex min-h-[80vh] items-center bg-navy text-white">
         <div

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 import Lightbox from '../components/Lightbox.jsx'
@@ -10,6 +11,9 @@ export default function Restaurant() {
   const menus = [c.restaurant_menu_dine_image, c.restaurant_menu_catering_image]
   return (
     <>
+      <Seo title={c.restaurant_seo_title} description={c.restaurant_seo_description} />
+      <span hidden data-cms="Restaurant - SEO - Page Title">{c.restaurant_seo_title}</span>
+      <span hidden data-cms="Restaurant - SEO - Meta Description">{c.restaurant_seo_description}</span>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
           <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Restaurant - Hero - Heading">

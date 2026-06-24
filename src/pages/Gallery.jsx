@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 import Lightbox from '../components/Lightbox.jsx'
 
@@ -31,6 +32,9 @@ export default function Gallery() {
 
   return (
     <>
+      <Seo title={c.gallery_seo_title} description={c.gallery_seo_description} />
+      <span hidden data-cms="Gallery - SEO - Page Title">{c.gallery_seo_title}</span>
+      <span hidden data-cms="Gallery - SEO - Meta Description">{c.gallery_seo_description}</span>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
           <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Gallery - Hero - Heading">

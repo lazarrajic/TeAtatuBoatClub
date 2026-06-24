@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 
@@ -45,6 +46,9 @@ export default function Contact() {
 
   return (
     <>
+      <Seo title={c.contact_seo_title} description={c.contact_seo_description} />
+      <span hidden data-cms="Contact - SEO - Page Title">{c.contact_seo_title}</span>
+      <span hidden data-cms="Contact - SEO - Meta Description">{c.contact_seo_description}</span>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
           <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Contact - Hero - Heading">

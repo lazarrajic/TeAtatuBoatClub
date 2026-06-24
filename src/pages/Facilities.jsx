@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 
@@ -22,6 +23,9 @@ function AnchorIcon() {
 export default function Facilities() {
   return (
     <>
+      <Seo title={c.facilities_seo_title} description={c.facilities_seo_description} />
+      <span hidden data-cms="Facilities - SEO - Page Title">{c.facilities_seo_title}</span>
+      <span hidden data-cms="Facilities - SEO - Meta Description">{c.facilities_seo_description}</span>
       {/* Hero */}
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">

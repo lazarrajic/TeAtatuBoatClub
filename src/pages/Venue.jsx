@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
 
 export default function Venue() {
   return (
     <>
+      <Seo title={c.venue_seo_title} description={c.venue_seo_description} />
+      <span hidden data-cms="Venue - SEO - Page Title">{c.venue_seo_title}</span>
+      <span hidden data-cms="Venue - SEO - Meta Description">{c.venue_seo_description}</span>
       <section className="bg-navy py-20 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
           <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Venue - Hero - Heading">

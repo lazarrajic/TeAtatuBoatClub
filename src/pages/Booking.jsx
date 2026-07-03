@@ -1,6 +1,7 @@
 import c from '../../content.js'
 import BookingWidget from '../booking/BookingWidget.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
+import Seo from '../components/Seo.jsx'
 
 // The ONLY CMS-editable content on this page is the static framing text below
 // (heading, "how it works", and the two notices). Everything inside
@@ -11,6 +12,9 @@ import WaveDivider from '../components/WaveDivider.jsx'
 export default function Booking() {
   return (
     <>
+      <Seo title={c.booking_seo_title} description={c.booking_seo_description} />
+      <span hidden data-cms="Booking - SEO - Page Title">{c.booking_seo_title}</span>
+      <span hidden data-cms="Booking - SEO - Meta Description">{c.booking_seo_description}</span>
       <section className="bg-navy py-16 text-center text-white">
         <div className="mx-auto max-w-4xl px-5">
           <h1 className="text-4xl font-semibold md:text-5xl" data-cms="Booking - Hero - Heading">

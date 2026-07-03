@@ -3,32 +3,24 @@ import { Link, NavLink, useLocation } from 'react-router-dom'
 import c from '../../content.js'
 import SmartLink from './SmartLink.jsx'
 
-// Top-level nav. Some items are dropdown groups to keep the bar uncluttered
-// across the club's 10 pages.
-const NAV = [
-  { label: 'Home', to: '/' },
-  { label: 'About', to: '/about' },
-  {
-    label: 'Boating',
-    children: [
-      { label: 'Facilities', to: '/facilities' },
-      { label: 'Pricing', to: '/pricing' },
-      { label: 'Book a Work Bay', to: '/booking' },
-    ],
-  },
-  { label: 'Membership', to: '/membership' },
-  {
-    label: 'Club',
-    children: [
-      { label: 'Restaurant & Bar', to: '/restaurant' },
-      { label: 'Venue Hire', to: '/venue-hire' },
-      { label: "What's On", to: '/events' },
-      { label: 'Gallery', to: '/gallery' },
-      { label: 'Club Rules', to: '/club-rules' },
-    ],
-  },
-  { label: 'Contact', to: '/contact' },
-]
+// Top-level nav, built from content.js `nav_links` (the single source of truth,
+// shared with the CMS). A link with a `group` becomes a dropdown child under that
+// group's label; ungrouped links stay top-level. A group appears at the position
+// of its first child, preserving nav_links order.
+function groupNav(links) {
+  const out = []
+  const groups = {}
+  for (const link of links || []) {
+    if (link.group) {
+      if (!groups[link.group]) { groups[link.group] = { label: link.group, children: [] }; out.push(groups[link.group]) }
+      groups[link.group].children.push({ label: link.label, to: link.to })
+    } else {
+      out.push({ label: link.label, to: link.to })
+    }
+  }
+  return out
+}
+const NAV = groupNav(c.nav_links)
 
 function Dropdown({ item }) {
   return (

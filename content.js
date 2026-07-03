@@ -33,6 +33,7 @@ export default {
     }
   ],
   "nav_cta": "Book a Work Bay",
+  "nav_cta_link": "/booking",
   "nav_links": [
     {
       "to": "/",
@@ -87,7 +88,9 @@ export default {
   "home_hero_heading": "Te Atatū Boating Club",
   "home_hero_sub": "A member-run boating club on the Waitematā since the 1960s - boat ramps, hardstand and work bays, plus a members bar, restaurant and function venue overlooking the harbour.",
   "home_hero_cta1": "Book a Work Bay",
+  "home_hero_cta1_link": "/booking",
   "home_hero_cta2": "Become a Member",
+  "home_hero_cta2_link": "/membership",
   "home_stats": [
     {
       "value": "750+",
@@ -106,10 +109,12 @@ export default {
   "home_about_heading": "More than a boat club",
   "home_about_body": "Started by a handful of volunteers in the early 1960s, Te Atatū Boating Club has grown to nearly 750 member families. Alongside our all-tide ramps, dinghy pontoons and boat maintenance facilities, members enjoy a licensed bar, the High Tide Kitchen, and function spaces with unbeatable harbour and city views.",
   "home_about_cta": "Our Story",
+  "home_about_cta_link": "/about",
   "home_about_image": "/images/about.jpg",
   "home_facilities_label": "What We Offer",
   "home_facilities_heading": "Club Facilities",
   "home_facilities_cta": "See All Facilities",
+  "home_facilities_cta_link": "/facilities",
   "home_facilities": [
     {
       "title": "Boating Facilities",
@@ -132,6 +137,13 @@ export default {
   "home_cta_heading": "Ready to book a work bay?",
   "home_cta_body": "Members can reserve one of our four work bays up to two weeks ahead — and lock in the $25 member day rate.",
   "home_cta_button": "Book Now",
+  "home_cta_button_link": "/booking",
+  "pricing_cta_button": "Book a Work Bay",
+  "pricing_cta_button_link": "/booking",
+  "facilities_book_button": "Book a Work Bay",
+  "facilities_book_button_link": "/booking",
+  "facilities_gallery_button": "View the Gallery",
+  "facilities_gallery_button_link": "/gallery",
   "about_hero_heading": "Our Story",
   "about_hero_sub": "From pushing boats through the mangroves to a club of 750 families.",
   "about_story_heading": "Sixty years on the Waitematā",
@@ -174,6 +186,7 @@ export default {
   ],
   "about_cta_heading": "Want to get involved?",
   "about_cta_button": "Contact the Office",
+  "about_cta_button_link": "/contact",
   "facilities_hero_heading": "Boating Facilities",
   "facilities_hero_sub": "Everything you need to store, launch and maintain your boat.",
   "facilities_bays_label": "For Members",
@@ -949,6 +962,7 @@ export default {
   "membership_cta_heading": "Ready to join?",
   "membership_cta_body": "Get in touch with the office about membership, the application form, and the current waiting list.",
   "membership_cta_button": "Contact the Office",
+  "membership_cta_button_link": "/contact",
   "restaurant_hero_heading": "Restaurant & Bar",
   "restaurant_hero_sub": "The Members Bar and High Tide Kitchen — open to members and their guests.",
   "restaurant_intro_body": "Our licensed club rooms and the High Tide Kitchen are at the heart of the club. Drop in for a drink at the bar or a meal with the family, with views out over the harbour.",
@@ -989,6 +1003,7 @@ export default {
   "restaurant_cta_heading": "Come down for a meal",
   "restaurant_cta_body": "Members and guests welcome. Check the hours above and we’ll see you at the bar.",
   "restaurant_cta_button": "Find Us",
+  "restaurant_cta_button_link": "/contact",
   "venue_hero_heading": "Venue Hire",
   "venue_hero_sub": "Function spaces with unbeatable views of the harbour, CBD skyline and Whau River.",
   "venue_intro_body": "Host your next function at the club. Our spaces overlook the water, with balcony and lawn access. Get in touch with the office to check availability and pricing.",
@@ -1025,6 +1040,7 @@ export default {
   ],
   "venue_cta_heading": "Enquire about your function",
   "venue_cta_button": "Contact the Office",
+  "venue_cta_button_link": "/contact",
   "events_hero_heading": "What’s On",
   "events_hero_sub": "Live music, raffles and club events through the year.",
   "events_intro_body": "There’s always something happening at the club — from meat raffles to live music and seasonal events. For the most up-to-date listings, follow us on Facebook.",

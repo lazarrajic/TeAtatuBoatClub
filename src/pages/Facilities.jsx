@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from '../components/SmartLink.jsx'
 import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
@@ -65,7 +66,8 @@ export default function Facilities() {
           <p className="text-lg">
             Book ahead to lock in the <span className="font-semibold text-gold">$25 member day rate</span>.
           </p>
-          <Link to="/booking" className="btn-primary shrink-0">Book a Work Bay</Link>
+          <SmartLink to={c.facilities_book_button_link} className="btn-primary shrink-0" data-cms="Facilities - Book - Button">{c.facilities_book_button}</SmartLink>
+          <span hidden data-cms="Facilities - Book - Button Link">{c.facilities_book_button_link}</span>
         </div>
       </section>
 
@@ -105,7 +107,8 @@ export default function Facilities() {
             <p className="mx-auto mt-3 max-w-xl text-white/75" data-cms="Facilities - Gallery - Sub">
               {c.facilities_gallery_sub}
             </p>
-            <Link to="/gallery" className="btn-primary mt-6">View the Gallery</Link>
+            <SmartLink to={c.facilities_gallery_button_link} className="btn-primary mt-6" data-cms="Facilities - Gallery - Button">{c.facilities_gallery_button}</SmartLink>
+            <span hidden data-cms="Facilities - Gallery - Button Link">{c.facilities_gallery_button_link}</span>
           </AnimatedSection>
         </div>
       </section>

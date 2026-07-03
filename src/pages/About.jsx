@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from '../components/SmartLink.jsx'
 import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
@@ -83,9 +84,10 @@ export default function About() {
             <h2 className="text-3xl font-semibold md:text-4xl" data-cms="About - CTA - Heading">
               {c.about_cta_heading}
             </h2>
-            <Link to="/contact" className="btn-primary mt-8" data-cms="About - CTA - Button">
+            <SmartLink to={c.about_cta_button_link} className="btn-primary mt-8" data-cms="About - CTA - Button">
               {c.about_cta_button}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="About - CTA - Button Link">{c.about_cta_button_link}</span>
           </AnimatedSection>
         </div>
       </section>

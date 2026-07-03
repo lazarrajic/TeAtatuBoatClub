@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from '../components/SmartLink.jsx'
 import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
@@ -59,7 +60,8 @@ export default function Pricing() {
             {c.pricing_currency_note}
           </p>
           <div className="mt-6 text-center">
-            <Link to="/booking" className="btn-primary">Book a Work Bay</Link>
+            <SmartLink to={c.pricing_cta_button_link} className="btn-primary" data-cms="Pricing - CTA - Button">{c.pricing_cta_button}</SmartLink>
+            <span hidden data-cms="Pricing - CTA - Button Link">{c.pricing_cta_button_link}</span>
           </div>
         </AnimatedSection>
       </section>

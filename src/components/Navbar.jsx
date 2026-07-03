@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from './SmartLink.jsx'
 
 // Top-level nav. Some items are dropdown groups to keep the bar uncluttered
 // across the club's 10 pages.
@@ -99,9 +100,10 @@ export default function Navbar() {
                 </NavLink>
               ),
             )}
-            <Link to="/booking" className="btn-primary px-5 py-2.5 text-sm" data-cms="Nav - Header - CTA">
+            <SmartLink to={c.nav_cta_link} className="btn-primary px-5 py-2.5 text-sm" data-cms="Nav - Header - CTA">
               {c.nav_cta}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="Nav - Header - CTA Link">{c.nav_cta_link}</span>
           </div>
 
           <button
@@ -145,9 +147,9 @@ export default function Navbar() {
                 </NavLink>
               ),
             )}
-            <Link to="/booking" className="btn-primary mt-6">
+            <SmartLink to={c.nav_cta_link} className="btn-primary mt-6">
               {c.nav_cta}
-            </Link>
+            </SmartLink>
           </div>
         </div>
       )}

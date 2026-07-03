@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from '../components/SmartLink.jsx'
 import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
@@ -25,12 +26,14 @@ export default function Home() {
             {c.home_hero_sub}
           </p>
           <div className="mt-8 flex flex-wrap gap-4">
-            <Link to="/booking" className="btn-primary" data-cms="Home - Hero - CTA 1">
+            <SmartLink to={c.home_hero_cta1_link} className="btn-primary" data-cms="Home - Hero - CTA 1">
               {c.home_hero_cta1}
-            </Link>
-            <Link to="/membership" className="btn-secondary" data-cms="Home - Hero - CTA 2">
+            </SmartLink>
+            <span hidden data-cms="Home - Hero - CTA 1 Link">{c.home_hero_cta1_link}</span>
+            <SmartLink to={c.home_hero_cta2_link} className="btn-secondary" data-cms="Home - Hero - CTA 2">
               {c.home_hero_cta2}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="Home - Hero - CTA 2 Link">{c.home_hero_cta2_link}</span>
           </div>
         </div>
       </section>
@@ -62,9 +65,10 @@ export default function Home() {
             {c.home_about_heading}
           </h2>
           <p className="mt-4 text-navy/70" data-cms="Home - About - Body">{c.home_about_body}</p>
-          <Link to="/about" className="btn-outline mt-6" data-cms="Home - About - CTA">
+          <SmartLink to={c.home_about_cta_link} className="btn-outline mt-6" data-cms="Home - About - CTA">
             {c.home_about_cta}
-          </Link>
+          </SmartLink>
+          <span hidden data-cms="Home - About - CTA Link">{c.home_about_cta_link}</span>
         </AnimatedSection>
         <AnimatedSection delay={120}>
           <img
@@ -125,9 +129,10 @@ export default function Home() {
             ))}
           </div>
           <div className="mt-10 text-center">
-            <Link to="/facilities" className="btn-outline" data-cms="Home - Facilities - CTA">
+            <SmartLink to={c.home_facilities_cta_link} className="btn-outline" data-cms="Home - Facilities - CTA">
               {c.home_facilities_cta}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="Home - Facilities - CTA Link">{c.home_facilities_cta_link}</span>
           </div>
         </div>
       </section>
@@ -142,9 +147,10 @@ export default function Home() {
             <p className="mx-auto mt-4 max-w-2xl text-white/80" data-cms="Home - CTA - Body">
               {c.home_cta_body}
             </p>
-            <Link to="/booking" className="btn-primary mt-8" data-cms="Home - CTA - Button">
+            <SmartLink to={c.home_cta_button_link} className="btn-primary mt-8" data-cms="Home - CTA - Button">
               {c.home_cta_button}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="Home - CTA - Button Link">{c.home_cta_button_link}</span>
           </AnimatedSection>
         </div>
       </section>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from '../components/SmartLink.jsx'
 import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
@@ -106,9 +107,10 @@ export default function Restaurant() {
             <p className="mx-auto mt-4 max-w-2xl text-white/80" data-cms="Restaurant - CTA - Body">
               {c.restaurant_cta_body}
             </p>
-            <Link to="/contact" className="btn-primary mt-8" data-cms="Restaurant - CTA - Button">
+            <SmartLink to={c.restaurant_cta_button_link} className="btn-primary mt-8" data-cms="Restaurant - CTA - Button">
               {c.restaurant_cta_button}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="Restaurant - CTA - Button Link">{c.restaurant_cta_button_link}</span>
           </AnimatedSection>
         </div>
       </section>

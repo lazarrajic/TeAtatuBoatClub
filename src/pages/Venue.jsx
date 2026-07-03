@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import c from '../../content.js'
+import SmartLink from '../components/SmartLink.jsx'
 import Seo from '../components/Seo.jsx'
 import AnimatedSection from '../components/AnimatedSection.jsx'
 import WaveDivider from '../components/WaveDivider.jsx'
@@ -63,9 +64,10 @@ export default function Venue() {
             <h2 className="text-3xl font-semibold md:text-4xl" data-cms="Venue - CTA - Heading">
               {c.venue_cta_heading}
             </h2>
-            <Link to="/contact" className="btn-primary mt-8" data-cms="Venue - CTA - Button">
+            <SmartLink to={c.venue_cta_button_link} className="btn-primary mt-8" data-cms="Venue - CTA - Button">
               {c.venue_cta_button}
-            </Link>
+            </SmartLink>
+            <span hidden data-cms="Venue - CTA - Button Link">{c.venue_cta_button_link}</span>
           </AnimatedSection>
         </div>
       </section>

@@ -1121,6 +1121,8 @@ export default {
     }
   ],
   "rules_notice": "Contractors must provide $5 million public liability and $2 million ship repairers liability insurance certificates before working on site.",
+  "booking_seo_title": "Book a Work Bay | Te Atatū Boating Club",
+  "booking_seo_description": "Reserve a work bay at the Te Atatū Boating Club. Check live availability and book your bay online.",
   "booking_hero_heading": "Book a Work Bay",
   "booking_hero_sub": "Members can reserve one of our four work bays up to two weeks in advance.",
   "booking_how_heading": "How it works",

@@ -24,7 +24,7 @@ export default function Rules() {
           <p className="text-lg text-navy/70" data-cms="Rules - Intro - Body">{c.rules_intro_body}</p>
         </AnimatedSection>
 
-        <div data-cms-repeater="Rules - Groups" className="space-y-5">
+        <div data-cms-repeater="Rules - Groups" data-cms-shape="card" data-cms-min="2" data-cms-overflow="wrap" className="space-y-5">
           {c.rules_groups.map((g, i) => (
             <div key={i} className="card p-6">
               <h3 className="font-display text-lg font-semibold text-navy" data-cms-field="title">{g.title}</h3>

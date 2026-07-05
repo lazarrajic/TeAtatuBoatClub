@@ -54,7 +54,7 @@ export default function Membership() {
             {c.membership_how_heading}
           </h2>
         </AnimatedSection>
-        <div data-cms-repeater="Membership - Steps" className="grid gap-5 sm:grid-cols-2">
+        <div data-cms-repeater="Membership - Steps" data-cms-shape="list" data-cms-min="2" data-cms-recommend="4" data-cms-max="6" data-cms-overflow="wrap" className="grid gap-5 sm:grid-cols-2">
           {c.membership_steps.map((s, i) => (
             <div key={i} className="card p-6">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-accent text-sm font-bold text-white">
@@ -69,7 +69,7 @@ export default function Membership() {
 
       <section className="bg-sand">
         <div className="section">
-          <div data-cms-repeater="Membership - Benefits" className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
+          <div data-cms-repeater="Membership - Benefits" data-cms-shape="card" data-cms-min="2" data-cms-recommend="4" data-cms-max="8" data-cms-overflow="wrap" className="grid gap-6 sm:grid-cols-2 md:grid-cols-4">
             {c.membership_benefits.map((b, i) => (
               <div key={i} className="card p-6 text-center">
                 <h3 className="text-lg font-bold" data-cms-field="title">{b.title}</h3>

@@ -67,7 +67,7 @@ export default function Footer() {
 
         <div>
           <p className="mb-3 font-semibold text-white">Follow</p>
-          <ul className="flex gap-3" data-cms-repeater="Footer - Socials">
+          <ul className="flex gap-3" data-cms-repeater="Footer - Socials" data-cms-shape="list" data-cms-min="1" data-cms-max="6" data-cms-overflow="wrap">
             {c.socials.map((social, i) => (
               <li key={i}>
                 <a

@@ -72,7 +72,7 @@ export default function Pricing() {
           <h2 className="mb-6 text-2xl font-semibold" data-cms="Pricing - Other - Heading">
             {c.pricing_other_heading}
           </h2>
-          <div data-cms-repeater="Pricing - Other" className="overflow-hidden rounded-2xl bg-white shadow-sm">
+          <div data-cms-repeater="Pricing - Other" data-cms-shape="list" data-cms-min="1" data-cms-overflow="wrap" className="overflow-hidden rounded-2xl bg-white shadow-sm">
             {c.pricing_other.map((row, i) => (
               <div key={i} className="flex items-center justify-between border-b border-navy/5 px-5 py-3 last:border-0">
                 <span className="text-sm text-navy/80" data-cms-field="item">{row.item}</span>

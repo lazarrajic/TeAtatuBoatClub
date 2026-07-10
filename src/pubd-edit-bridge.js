@@ -149,6 +149,17 @@ function applyValue(el, value, scope) {
           n.style.backgroundImage = `url(${value})`
         }
       })
+    } else if (el.parentElement) {
+      // Previously-empty slot: no old src to match. The hidden-companion
+      // convention keeps the CSS-background layer beside the img, so update
+      // background layers in the same parent that carry no decoration of
+      // their own ('none' or a real url) — never gradient washes.
+      el.parentElement.querySelectorAll('[style]').forEach((n) => {
+        const bg = n.style.backgroundImage
+        if (bg === 'none' || (bg && bg.includes('url('))) {
+          n.style.backgroundImage = `url(${value})`
+        }
+      })
     }
   } else {
     el.textContent = value

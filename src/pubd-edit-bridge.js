@@ -236,23 +236,41 @@ function goTo(prefix) {
 }
 
 function navigate(path) {
-  window.history.pushState({}, '', path)
+  window.history.pushState({}, '', path) // patched below — triggers the rescan
   window.dispatchEvent(new PopStateEvent('popstate')) // react-router follows
-  setTimeout(() => {
+}
+
+// ── SPA route changes ─────────────────────────────────────────────────────────
+// The site is a SPA: any nav click swaps the DOM under us, and only CMS-driven
+// navigation used to rescan — in-site links left the field map stale and the
+// panel stuck on the old page. Watch history itself (pushState/replaceState +
+// back/forward), wait for React to render, rescan, re-apply every draft value
+// the CMS has sent (fresh pages mount with published content), and report.
+const applied = {}
+let routeT = null
+function onRouteChange() {
+  clearTimeout(routeT)
+  routeT = setTimeout(() => {
     scan()
     lastPrefix = null
+    Object.entries(applied).forEach(([k, v]) => setField(k, v))
     post({ type: 'page', path: window.location.pathname })
     report()
   }, 400)
 }
+const origPush = history.pushState.bind(history)
+history.pushState = (...args) => { origPush(...args); onRouteChange() }
+const origReplace = history.replaceState.bind(history)
+history.replaceState = (...args) => { origReplace(...args); onRouteChange() }
+window.addEventListener('popstate', onRouteChange)
 
 window.addEventListener('message', (event) => {
   if (!ALLOWED_PARENTS.includes(event.origin)) return
   const msg = event.data
   if (!msg || msg.source !== 'pubd-cms') return
   cmsOrigin = event.origin
-  if (msg.type === 'hydrate') Object.entries(msg.diff || {}).forEach(([k, v]) => setField(k, v))
-  if (msg.type === 'set') setField(msg.key, msg.value)
+  if (msg.type === 'hydrate') Object.entries(msg.diff || {}).forEach(([k, v]) => { applied[k] = v; setField(k, v) })
+  if (msg.type === 'set') { applied[msg.key] = msg.value; setField(msg.key, msg.value) }
   if (msg.type === 'set-item') setItemField(msg.key, msg.index, msg.field, msg.value)
   if (msg.type === 'item-add') itemAdd(msg.key, msg.values)
   if (msg.type === 'item-remove') itemRemove(msg.key, msg.index)

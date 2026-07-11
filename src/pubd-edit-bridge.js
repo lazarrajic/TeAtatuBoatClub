@@ -281,6 +281,36 @@ function routeWork() {
   Object.entries(applied).forEach(([k, v]) => apply(k, v))
   post({ type: 'page', path: window.location.pathname })
   report()
+  measureAspects()
+}
+
+// Report each image slot's real rendered aspect so the panel previews the crop
+// the site actually uses (an arch, a square) instead of assuming 16:9. Hidden
+// companion imgs have no box — measure their parent (the visible frame).
+function measureAspects() {
+  const map = {}
+  const boxFor = (el) => {
+    const n = el.getClientRects().length ? el : el.parentElement
+    if (!n) return null
+    const r = n.getBoundingClientRect()
+    return r.width > 20 && r.height > 20 ? r : null
+  }
+  fieldMap.forEach((els, key) => {
+    const img = els.find((e) => e.tagName === 'IMG')
+    if (!img) return
+    const r = boxFor(img)
+    if (r) map[key] = Math.round((r.width / r.height) * 100) / 100
+  })
+  repeaterMap.forEach((container, key) => {
+    const first = itemsOf(container)[0]
+    if (!first) return
+    first.querySelectorAll('[data-cms-field]').forEach((el) => {
+      if (el.tagName !== 'IMG') return
+      const r = boxFor(el)
+      if (r) map[key + '::' + el.getAttribute('data-cms-field')] = Math.round((r.width / r.height) * 100) / 100
+    })
+  })
+  if (Object.keys(map).length) post({ type: 'aspects', map })
 }
 function onRouteChange() {
   clearTimeout(routeT)
@@ -322,3 +352,4 @@ window.addEventListener('scroll', onScroll, { passive: true })
 window.addEventListener('resize', onScroll, { passive: true })
 post({ type: 'hello', version: 5, path: window.location.pathname })
 setTimeout(report, 300)
+setTimeout(measureAspects, 600) // after first paint settles

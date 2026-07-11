@@ -172,6 +172,32 @@ function setField(key, value) {
   for (const el of els) applyValue(el, value, document)
 }
 
+// Reconcile a whole repeater to a draft array (hydration): top up / trim the
+// item count with the same primitives the live ops use, then set every field
+// of every item. Nested objects (composites) aren't previewable yet — skipped.
+function setRepeater(key, json) {
+  const container = repeaterMap.get(key)
+  if (!container) return
+  let items
+  try { items = JSON.parse(json) } catch { return }
+  if (!Array.isArray(items)) return
+  let count = itemsOf(container).length
+  while (count > items.length) { itemRemove(key, count - 1); count-- }
+  while (count < items.length) { itemAdd(key, items[count]); count++ }
+  items.forEach((item, i) => {
+    Object.entries(item || {}).forEach(([field, value]) => {
+      if (value !== null && typeof value === 'object') return
+      setItemField(key, i, field, String(value ?? ''))
+    })
+  })
+}
+
+// Route a hydrated value to the right applier — repeater JSON vs flat field.
+function apply(key, value) {
+  if (repeaterMap.has(key) && typeof value === 'string' && value.trim().startsWith('[')) setRepeater(key, value)
+  else setField(key, value)
+}
+
 function setItemField(repeaterKey, index, field, value) {
   const container = repeaterMap.get(repeaterKey)
   if (!container) return
@@ -253,7 +279,7 @@ function onRouteChange() {
   routeT = setTimeout(() => {
     scan()
     lastPrefix = null
-    Object.entries(applied).forEach(([k, v]) => setField(k, v))
+    Object.entries(applied).forEach(([k, v]) => apply(k, v))
     post({ type: 'page', path: window.location.pathname })
     report()
   }, 400)
@@ -269,7 +295,7 @@ window.addEventListener('message', (event) => {
   const msg = event.data
   if (!msg || msg.source !== 'pubd-cms') return
   cmsOrigin = event.origin
-  if (msg.type === 'hydrate') Object.entries(msg.diff || {}).forEach(([k, v]) => { applied[k] = v; setField(k, v) })
+  if (msg.type === 'hydrate') Object.entries(msg.diff || {}).forEach(([k, v]) => { applied[k] = v; apply(k, v) })
   if (msg.type === 'set') { applied[msg.key] = msg.value; setField(msg.key, msg.value) }
   if (msg.type === 'set-item') setItemField(msg.key, msg.index, msg.field, msg.value)
   if (msg.type === 'item-add') itemAdd(msg.key, msg.values)

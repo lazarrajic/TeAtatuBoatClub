@@ -274,14 +274,20 @@ function navigate(path) {
 // the CMS has sent (fresh pages mount with published content), and report.
 const applied = {}
 let routeT = null
+let routeT2 = null
+function routeWork() {
+  scan()
+  lastPrefix = null
+  Object.entries(applied).forEach(([k, v]) => apply(k, v))
+  post({ type: 'page', path: window.location.pathname })
+  report()
+}
 function onRouteChange() {
   clearTimeout(routeT)
+  clearTimeout(routeT2)
   routeT = setTimeout(() => {
-    scan()
-    lastPrefix = null
-    Object.entries(applied).forEach(([k, v]) => apply(k, v))
-    post({ type: 'page', path: window.location.pathname })
-    report()
+    routeWork()
+    routeT2 = setTimeout(routeWork, 800) // settle pass — slow pages, late images
   }, 400)
 }
 const origPush = history.pushState.bind(history)
@@ -297,6 +303,7 @@ window.addEventListener('message', (event) => {
   cmsOrigin = event.origin
   if (msg.type === 'hydrate') Object.entries(msg.diff || {}).forEach(([k, v]) => { applied[k] = v; apply(k, v) })
   if (msg.type === 'set') { applied[msg.key] = msg.value; setField(msg.key, msg.value) }
+  if (msg.type === 'cache') applied[msg.key] = msg.value // replay state only — no DOM work
   if (msg.type === 'set-item') setItemField(msg.key, msg.index, msg.field, msg.value)
   if (msg.type === 'item-add') itemAdd(msg.key, msg.values)
   if (msg.type === 'item-remove') itemRemove(msg.key, msg.index)
@@ -304,6 +311,10 @@ window.addEventListener('message', (event) => {
   if (msg.type === 'goto') goTo(msg.prefix)
   if (msg.type === 'navigate') navigate(msg.path)
 })
+
+// The page is really unloading (external link, hard reload) — tell the panel
+// so it doesn't keep floating over a page we no longer control.
+window.addEventListener('pagehide', () => post({ type: 'bye' }))
 
 // ── Boot ──────────────────────────────────────────────────────────────────────
 scan()

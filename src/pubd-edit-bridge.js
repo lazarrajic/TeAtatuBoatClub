@@ -142,23 +142,22 @@ function onScroll() {
 function applyValue(el, value, scope) {
   if (el.tagName === 'IMG') {
     const old = el.getAttribute('src')
-    el.src = value
+    el.src = value || ''
+    // Clearing an image sets the twin to 'none', never url('') — a removed
+    // photo must actually disappear, not linger as a broken background.
+    const paint = (n) => { n.style.backgroundImage = value ? `url(${value})` : 'none' }
     if (old) {
       ;(scope || document).querySelectorAll('[style]').forEach((n) => {
-        if (n.style.backgroundImage && n.style.backgroundImage.includes(old)) {
-          n.style.backgroundImage = `url(${value})`
-        }
+        if (n.style.backgroundImage && n.style.backgroundImage.includes(old)) paint(n)
       })
-    } else if (el.parentElement) {
+    } else if (el.parentElement && value) {
       // Previously-empty slot: no old src to match. The hidden-companion
       // convention keeps the CSS-background layer beside the img, so update
       // background layers in the same parent that carry no decoration of
       // their own ('none' or a real url) — never gradient washes.
       el.parentElement.querySelectorAll('[style]').forEach((n) => {
         const bg = n.style.backgroundImage
-        if (bg === 'none' || (bg && bg.includes('url('))) {
-          n.style.backgroundImage = `url(${value})`
-        }
+        if (bg === 'none' || (bg && bg.includes('url('))) paint(n)
       })
     }
   } else {

@@ -88,7 +88,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10 py-5 text-center text-xs text-white/50">
-        © {c.company_name}. All rights reserved.
+        © {c.company_name}. All rights reserved. · <a href="https://pubd.io" target="_blank" rel="noopener" className="transition-colors hover:text-white/80">Powered by Pubd</a>
       </div>
     </footer>
   )

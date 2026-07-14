@@ -258,6 +258,19 @@ function goTo(prefix) {
       return
     }
   }
+  // A section that is ONLY a repeater (e.g. "Services - List") has no flat
+  // data-cms field carrying the prefix — scroll to the repeater container itself.
+  const rep = repeaterMap.get(prefix)
+  if (rep) {
+    suppress = true
+    suppressTarget = prefix
+    clearTimeout(safetyT)
+    safetyT = setTimeout(finishSuppress, 1800)
+    rep.style.scrollMarginTop = '96px'
+    rep.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    clearTimeout(settleT)
+    settleT = setTimeout(finishSuppress, 300)
+  }
 }
 
 function navigate(path) {
